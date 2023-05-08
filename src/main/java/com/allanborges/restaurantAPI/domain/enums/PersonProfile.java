@@ -1,13 +1,13 @@
 package com.allanborges.restaurantAPI.domain.enums;
 
-public enum Profiles {
+public enum PersonProfile {
 	
 	ADMIN(0, "ROLE_ADMIN"), CLIENT(1, "ROLE_CLIENT"), COURIER(2, "ROLE_COURIER");
 	
 	private Integer code;
 	private String description;
 	
-	private Profiles(Integer code, String description) {
+	private PersonProfile(Integer code, String description) {
 		this.code = code;
 		this.description = description;
 	}
@@ -20,11 +20,11 @@ public enum Profiles {
 		return description;
 	}
 	
-	public static Profiles toEnum(Integer code) {
+	public static PersonProfile toEnum(Integer code) {
 		if(code == null)
 			return null;
 		
-		for(Profiles x : Profiles.values()) {
+		for(PersonProfile x : PersonProfile.values()) {
 			if(code.equals(x.getCode()))
 				return x;
 		}
