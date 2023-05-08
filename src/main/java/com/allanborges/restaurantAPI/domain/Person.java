@@ -1,22 +1,46 @@
 package com.allanborges.restaurantAPI.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.allanborges.restaurantAPI.domain.enums.PersonProfile;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public abstract class Person {
+import com.allanborges.restaurantAPI.domain.enums.PersonProfile;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+public abstract class Person implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	protected String name;
+	
+	@Column(unique = true)
 	protected String nif;
+	
+	@Column(unique = true)
 	protected String address;
 	protected String email;
 	protected String password;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "PROFILES")
 	protected Set<Integer> profiles = new HashSet<>();
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	protected LocalDate createDate = LocalDate.now();
 	
 	public Person() {
@@ -34,7 +58,6 @@ public abstract class Person {
 		this.password = password;
 		addProfile(PersonProfile.CLIENT);
 	}
-
 
 	public Integer getId() {
 		return id;

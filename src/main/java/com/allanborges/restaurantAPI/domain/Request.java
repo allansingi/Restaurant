@@ -1,37 +1,64 @@
 package com.allanborges.restaurantAPI.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import com.allanborges.restaurantAPI.domain.enums.OrderStatus;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-public class Order {
+import com.allanborges.restaurantAPI.domain.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+public class Request implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String deliveryAddress;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDate createDate= LocalDate.now();
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDate updateDate;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDate deliveredDate;
 	private OrderStatus orderStatus;
 	
-	private Client client;
+	@ManyToOne
+	@JoinColumn(name = "courier_id")
 	private Courier courier;
 	
-	private List<Menu> menuList;
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
+	
+	@OneToMany(mappedBy = "request")
+	private List<Menu> menus;
 
-	public Order() {
+	public Request() {
 		super();
 	}
 
-	public Order(Integer id, String deliveryAddress, OrderStatus orderStatus, Client client, Courier courier, List<Menu> menuList) {
+	public Request(Integer id, LocalDate deliveredDate, OrderStatus orderStatus, Courier courier, Client client,
+			List<Menu> menus) {
 		super();
 		this.id = id;
-		this.deliveryAddress = deliveryAddress;
+		this.deliveredDate = deliveredDate;
 		this.orderStatus = orderStatus;
-		this.client = client;
 		this.courier = courier;
-		this.menuList = menuList;
+		this.client = client;
+		this.menus = menus;
 	}
 
 	public Integer getId() {
@@ -98,12 +125,12 @@ public class Order {
 		this.courier = courier;
 	}
 
-	public List<Menu> getMenuList() {
-		return menuList;
+	public List<Menu> getMenus() {
+		return menus;
 	}
 
-	public void setMenuList(List<Menu> menuList) {
-		this.menuList = menuList;
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
 	}
 
 	@Override
@@ -119,7 +146,7 @@ public class Order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		Request other = (Request) obj;
 		return Objects.equals(id, other.id);
 	}
 	

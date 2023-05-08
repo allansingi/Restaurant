@@ -1,23 +1,44 @@
 package com.allanborges.restaurantAPI.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Menu {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+public class Menu implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private String description;
 	private Double price;
 	private String quantity;
 	private Boolean active;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDate expireDate;
 	private String imageUrl;
+	
+	@ManyToOne
+	@JoinColumn(name = "request_id")
+	private Request request;
 	
 	public Menu() {
 		super();
 	}
 
-	public Menu(Integer id, String name, String description, Double price, String quantity, Boolean active, LocalDate expire, String imageUrl) {
+	public Menu(Integer id, String name, String description, Double price, String quantity, Boolean active,
+			LocalDate expireDate, String imageUrl, Request request) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,8 +46,9 @@ public class Menu {
 		this.price = price;
 		this.quantity = quantity;
 		this.active = active;
-		this.expireDate = expire;
+		this.expireDate = expireDate;
 		this.imageUrl = imageUrl;
+		this.request = request;
 	}
 
 	public Integer getId() {
@@ -91,6 +113,14 @@ public class Menu {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public Request getRequest() {
+		return request;
+	}
+
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 	
 }
