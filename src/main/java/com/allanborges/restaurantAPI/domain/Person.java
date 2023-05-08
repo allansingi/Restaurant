@@ -32,6 +32,7 @@ public abstract class Person {
 		this.address = address;
 		this.email = email;
 		this.password = password;
+		addProfile(PersonProfile.CLIENT);
 	}
 
 
