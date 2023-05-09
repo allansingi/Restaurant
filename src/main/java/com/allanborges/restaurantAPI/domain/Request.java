@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.allanborges.restaurantAPI.domain.enums.OrderStatus;
+import com.allanborges.restaurantAPI.domain.enums.RequestStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -33,7 +33,7 @@ public class Request implements Serializable {
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDate deliveredDate;
-	private OrderStatus orderStatus;
+	private RequestStatus requestStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "courier_id")
@@ -50,12 +50,12 @@ public class Request implements Serializable {
 		super();
 	}
 
-	public Request(Integer id, LocalDate deliveredDate, OrderStatus orderStatus, Courier courier, Client client,
+	public Request(Integer id, LocalDate deliveredDate, RequestStatus orderStatus, Courier courier, Client client,
 			List<Menu> menus) {
 		super();
 		this.id = id;
 		this.deliveredDate = deliveredDate;
-		this.orderStatus = orderStatus;
+		this.requestStatus = orderStatus;
 		this.courier = courier;
 		this.client = client;
 		this.menus = menus;
@@ -101,12 +101,12 @@ public class Request implements Serializable {
 		this.deliveredDate = deliveredDate;
 	}
 
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
+	public RequestStatus getOrderStatus() {
+		return requestStatus;
 	}
 
-	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
+	public void setOrderStatus(RequestStatus orderStatus) {
+		this.requestStatus = orderStatus;
 	}
 
 	public Client getClient() {
