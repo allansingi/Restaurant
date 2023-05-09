@@ -22,7 +22,7 @@ public class Menu implements Serializable {
 	private String name;
 	private String description;
 	private Double price;
-	private String quantity;
+	private Integer quantity;
 	private Boolean active;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -37,8 +37,8 @@ public class Menu implements Serializable {
 		super();
 	}
 
-	public Menu(Integer id, String name, String description, Double price, String quantity, Boolean active,
-			LocalDate expireDate, String imageUrl, Request request) {
+	public Menu(Integer id, String name, String description, Double price, Integer quantity, Boolean active,
+			LocalDate expireDate, String imageUrl) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,7 +48,6 @@ public class Menu implements Serializable {
 		this.active = active;
 		this.expireDate = expireDate;
 		this.imageUrl = imageUrl;
-		this.request = request;
 	}
 
 	public Integer getId() {
@@ -83,11 +82,11 @@ public class Menu implements Serializable {
 		this.price = price;
 	}
 
-	public String getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

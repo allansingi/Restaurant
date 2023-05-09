@@ -50,12 +50,13 @@ public class Request implements Serializable {
 		super();
 	}
 
-	public Request(Integer id, LocalDate deliveredDate, RequestStatus orderStatus, Courier courier, Client client,
+	public Request(Integer id, String deliveryAddress, LocalDate deliveredDate, RequestStatus requestStatus, Courier courier, Client client,
 			List<Menu> menus) {
 		super();
 		this.id = id;
+		this.deliveryAddress = deliveryAddress;
 		this.deliveredDate = deliveredDate;
-		this.requestStatus = orderStatus;
+		this.requestStatus = requestStatus;
 		this.courier = courier;
 		this.client = client;
 		this.menus = menus;
