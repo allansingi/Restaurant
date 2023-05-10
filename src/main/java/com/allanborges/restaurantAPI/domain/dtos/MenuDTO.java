@@ -1,23 +1,16 @@
-package com.allanborges.restaurantAPI.domain;
+package com.allanborges.restaurantAPI.domain.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
+import com.allanborges.restaurantAPI.domain.Menu;
+import com.allanborges.restaurantAPI.domain.Request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity
-public class Menu implements Serializable {
+public class MenuDTO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private String description;
@@ -28,26 +21,27 @@ public class Menu implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime expireDate;
 	private String imageUrl;
-	
-	@ManyToOne
-	@JoinColumn(name = "request_id")
 	private Request request;
 	
-	public Menu() {
+	public MenuDTO() {
 		super();
 	}
 
-	public Menu(Integer id, String name, String description, Double price, Integer quantity, Boolean active,
-			LocalDateTime expireDate, String imageUrl) {
+	public MenuDTO(Menu menu) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.quantity = quantity;
-		this.active = active;
-		this.expireDate = expireDate;
-		this.imageUrl = imageUrl;
+		this.id = menu.getId();
+		this.name = menu.getName();
+		this.description = menu.getDescription();
+		this.price = menu.getPrice();
+		this.quantity = menu.getQuantity();
+		this.active = menu.getActive();
+		this.expireDate = menu.getExpireDate();
+		this.imageUrl = menu.getImageUrl();
+		this.request = menu.getRequest();
+	}
+	
+	public MenuDTO(List<Menu> menu) {
+		super();
 	}
 
 	public Integer getId() {
@@ -121,5 +115,5 @@ public class Menu implements Serializable {
 	public void setRequest(Request request) {
 		this.request = request;
 	}
-	
+
 }

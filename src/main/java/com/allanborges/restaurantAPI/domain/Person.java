@@ -1,7 +1,7 @@
 package com.allanborges.restaurantAPI.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -41,7 +41,7 @@ public abstract class Person implements Serializable {
 	protected Set<Integer> profiles = new HashSet<>();
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	protected LocalDate createDate = LocalDate.now();
+	protected LocalDateTime createDate = LocalDateTime.now();
 	
 	public Person() {
 		super();
@@ -115,11 +115,11 @@ public abstract class Person implements Serializable {
 		this.profiles.add(profile.getCode());
 	}
 
-	public LocalDate getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDate createDate) {
+	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 

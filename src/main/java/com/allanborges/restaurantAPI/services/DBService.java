@@ -1,6 +1,7 @@
 package com.allanborges.restaurantAPI.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,11 @@ public class DBService {
 		Courier cou4 = new Courier(null, "Princess", "321123321", "Princess Street, 30", "princess@mail.com", "123");
 		Courier cou5 = new Courier(null, "Wario", "999888777", "Wario Street, 40", "wario@mail.com", "123");
 		
-		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDate.of(2023, 5, 15), null);
-		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, true, LocalDate.of(2023, 5, 20), null);
-		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDate.of(2023, 5, 18), null);
-		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDate.of(2023, 5, 25), null);
-		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDate.of(2023, 5, 22), null);
+		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDateTime.of(2023, 5, 9, 12, 00), null);
+		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, false, LocalDateTime.of(2023, 5, 20, 12, 00), null);
+		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 5, 18, 12, 00), null);
+		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 5, 25, 12, 00), null);
+		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 5, 22, 12, 00), null);
 		
 		Request req1 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, cou1, cli2, Arrays.asList(menu1, menu2));
 		Request req2 = new Request(null, cli3.getAddress(), null, RequestStatus.PREPARING, cou2, cli3, Arrays.asList(menu3));
