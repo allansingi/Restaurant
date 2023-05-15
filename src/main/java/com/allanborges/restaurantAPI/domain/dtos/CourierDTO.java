@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.allanborges.restaurantAPI.domain.Courier;
+import com.allanborges.restaurantAPI.domain.enums.PersonProfile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CourierDTO implements Serializable {
@@ -87,8 +88,8 @@ public class CourierDTO implements Serializable {
 		this.password = password;
 	}
 
-	public Set<Integer> getProfiles() {
-		return profiles;
+	public Set<PersonProfile> getProfiles() {
+		return profiles.stream().map(x -> PersonProfile.toEnum(x)).collect(Collectors.toSet());
 	}
 
 	public void setProfiles(Set<Integer> profiles) {

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -48,6 +49,19 @@ public class Menu implements Serializable {
 		this.active = active;
 		this.expireDate = expireDate;
 		this.imageUrl = imageUrl;
+	}
+	
+	public Menu(MenuDTO menuDTO) {
+		super();
+		this.id = menuDTO.getId();
+		this.name = menuDTO.getName();
+		this.description = menuDTO.getDescription();
+		this.price = menuDTO.getPrice();
+		this.quantity = menuDTO.getQuantity();
+		this.active = menuDTO.getActive();
+		this.expireDate = menuDTO.getExpireDate();
+		this.imageUrl = menuDTO.getImageUrl();
+		this.request = menuDTO.getRequest();
 	}
 
 	public Integer getId() {

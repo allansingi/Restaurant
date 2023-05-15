@@ -2,7 +2,6 @@ package com.allanborges.restaurantAPI.domain.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.allanborges.restaurantAPI.domain.Menu;
 import com.allanborges.restaurantAPI.domain.Request;
@@ -38,10 +37,6 @@ public class MenuDTO  implements Serializable {
 		this.expireDate = menu.getExpireDate();
 		this.imageUrl = menu.getImageUrl();
 		this.request = menu.getRequest();
-	}
-	
-	public MenuDTO(List<Menu> menu) {
-		super();
 	}
 
 	public Integer getId() {

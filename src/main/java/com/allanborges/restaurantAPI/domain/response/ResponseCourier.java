@@ -2,7 +2,7 @@ package com.allanborges.restaurantAPI.domain.response;
 
 import java.util.List;
 
-import com.allanborges.restaurantAPI.domain.Courier;
+import com.allanborges.restaurantAPI.domain.dtos.CourierDTO;
 
 public class ResponseCourier {
 	
@@ -11,13 +11,13 @@ public class ResponseCourier {
     private String statusCode;
     private String transactionId;
     private String msg;
-    private List<Courier> resValues;
+    private List<CourierDTO> resValues;
 	
     public ResponseCourier() {
 		super();
 	}
 	public ResponseCourier(String status, String sentOn, String statusCode, String transactionId, String msg,
-			List<Courier> resValues) {
+			List<CourierDTO> resValues) {
 		super();
 		this.status = status;
 		this.sentOn = sentOn;
@@ -57,10 +57,10 @@ public class ResponseCourier {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public List<Courier> getResValues() {
+	public List<CourierDTO> getResValues() {
 		return resValues;
 	}
-	public void setResValues(List<Courier> resValues) {
+	public void setResValues(List<CourierDTO> resValues) {
 		this.resValues = resValues;
 	}
 	

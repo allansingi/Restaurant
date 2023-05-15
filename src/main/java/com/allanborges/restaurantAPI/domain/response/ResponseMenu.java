@@ -2,7 +2,7 @@ package com.allanborges.restaurantAPI.domain.response;
 
 import java.util.List;
 
-import com.allanborges.restaurantAPI.domain.Menu;
+import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 
 public class ResponseMenu {
 
@@ -11,12 +11,12 @@ public class ResponseMenu {
     private String statusCode;
     private String transactionId;
     private String msg;
-    private List<Menu> resValues;
+    private List<MenuDTO> resValues;
 
     public ResponseMenu() {
     	super();
     }
-    public ResponseMenu(String status, String sentOn, String statusCode, String transactionId, String msg, List<Menu> resValues) {
+    public ResponseMenu(String status, String sentOn, String statusCode, String transactionId, String msg, List<MenuDTO> resValues) {
     	super();
     	this.status = status;
         this.sentOn = sentOn;
@@ -56,10 +56,10 @@ public class ResponseMenu {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-    public List<Menu> getResValues() {
+    public List<MenuDTO> getResValues() {
         return resValues;
     }
-    public void setResValues(List<Menu> resValues) {
+    public void setResValues(List<MenuDTO> resValues) {
         this.resValues = resValues;
     }
     
