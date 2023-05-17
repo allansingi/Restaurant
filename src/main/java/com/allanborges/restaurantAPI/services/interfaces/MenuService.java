@@ -14,5 +14,6 @@ public interface MenuService {
 	List<Menu> getActiveMenu();
 	Menu getMenuById(Integer id);
 	Menu addMenu(MenuDTO menuDTO);
+	Menu updateMenu(MenuDTO menuDTO);
 
 }
