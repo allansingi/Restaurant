@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,10 +27,6 @@ public class Menu implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime expireDate;
 	private String imageUrl;
-	
-	@ManyToOne
-	@JoinColumn(name = "request_id")
-	private Request request;
 	
 	public Menu() {
 		super();
@@ -61,7 +55,6 @@ public class Menu implements Serializable {
 		this.active = menuDTO.getActive();
 		this.expireDate = menuDTO.getExpireDate();
 		this.imageUrl = menuDTO.getImageUrl();
-		this.request = menuDTO.getRequest();
 	}
 
 	public Integer getId() {
@@ -126,14 +119,6 @@ public class Menu implements Serializable {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
-	}
-
-	public Request getRequest() {
-		return request;
-	}
-
-	public void setRequest(Request request) {
-		this.request = request;
 	}
 	
 }

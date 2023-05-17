@@ -15,5 +15,6 @@ public interface MenuService {
 	Menu getMenuById(Integer id);
 	Menu addMenu(MenuDTO menuDTO);
 	Menu updateMenu(MenuDTO menuDTO);
+	void deleteMenu(Integer id);
 
 }

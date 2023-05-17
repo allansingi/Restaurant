@@ -2,7 +2,6 @@ package com.allanborges.restaurantAPI.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.allanborges.restaurantAPI.domain.enums.RequestStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -43,15 +41,15 @@ public class Request implements Serializable {
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	@OneToMany(mappedBy = "request")
-	private List<Menu> menus;
+	private Integer requestedMenuId;
+	private String requestedMenuName;
+	private Integer requestedQuantity;
 
 	public Request() {
 		super();
 	}
 
-	public Request(Integer id, String deliveryAddress, LocalDate deliveredDate, RequestStatus requestStatus, Courier courier, Client client,
-			List<Menu> menus) {
+	public Request(Integer id, String deliveryAddress, LocalDate deliveredDate, RequestStatus requestStatus, Courier courier, Client client, Integer requestedMenuId, String requestedMenuName, Integer requestedQuantity) {
 		super();
 		this.id = id;
 		this.deliveryAddress = deliveryAddress;
@@ -59,9 +57,13 @@ public class Request implements Serializable {
 		this.requestStatus = requestStatus;
 		this.courier = courier;
 		this.client = client;
-		this.menus = menus;
+		this.requestedMenuId = requestedMenuId;
+		this.requestedMenuName = requestedMenuName;
+		this.requestedQuantity = requestedQuantity;
 	}
 
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -125,15 +127,31 @@ public class Request implements Serializable {
 	public void setCourier(Courier courier) {
 		this.courier = courier;
 	}
-
-	public List<Menu> getMenus() {
-		return menus;
+	
+	public Integer getRequestedMenuId() {
+		return requestedMenuId;
 	}
 
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
+	public void setRequestedMenuId(Integer requestedMenuId) {
+		this.requestedMenuId = requestedMenuId;
 	}
 
+	public String getRequestedMenuName() {
+		return requestedMenuName;
+	}
+
+	public void setRequestedMenuName(String requestedMenuName) {
+		this.requestedMenuName = requestedMenuName;
+	}
+
+	public Integer getRequestedQuantity() {
+		return requestedQuantity;
+	}
+
+	public void setRequestedQuantity(Integer requestedQuantity) {
+		this.requestedQuantity = requestedQuantity;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

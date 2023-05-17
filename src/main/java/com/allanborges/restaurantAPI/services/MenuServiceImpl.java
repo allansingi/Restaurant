@@ -1,5 +1,6 @@
 package com.allanborges.restaurantAPI.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.allanborges.restaurantAPI.domain.Menu;
+import com.allanborges.restaurantAPI.domain.Request;
 import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 import com.allanborges.restaurantAPI.repositories.MenuRepository;
+import com.allanborges.restaurantAPI.repositories.RequestRepository;
+import com.allanborges.restaurantAPI.services.exceptions.DataIntegrityViolationException;
 import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidException;
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
 import com.allanborges.restaurantAPI.services.interfaces.MenuService;
@@ -18,6 +22,9 @@ public class MenuServiceImpl implements MenuService {
 	
 	@Autowired
 	private MenuRepository menuRepository;
+	
+	@Autowired
+	private RequestRepository requestRepository;
 	
 	@Override
 	public List<Menu> getAllMenu() {
@@ -59,6 +66,19 @@ public class MenuServiceImpl implements MenuService {
 			currentMenu = new Menu(menuDTO);
 			return menuRepository.save(currentMenu);
 		}
+	}
+
+	@Override
+	public void deleteMenu(Integer id) {
+		getMenuById(id);
+		List<Request> list = new ArrayList<>();
+		list = requestRepository.findByRequestedMenuId(id);
+		
+		if(!list.isEmpty()) {
+			throw new DataIntegrityViolationException("The Menu has a request and can not be deleted!");
+		}
+		
+		menuRepository.deleteById(id);
 	}
 
 }

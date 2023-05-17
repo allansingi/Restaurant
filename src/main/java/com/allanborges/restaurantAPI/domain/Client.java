@@ -40,12 +40,12 @@ public class Client extends Person implements Serializable {
 		this.createDate = clientDTO.getCreateDate();
 	}
 
-	public List<Request> getOrders() {
+	public List<Request> getRequests() {
 		return requests;
 	}
 
-	public void setOrders(List<Request> orders) {
-		this.requests = orders;
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
 	}
 	
 }

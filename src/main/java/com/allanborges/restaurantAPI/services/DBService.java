@@ -53,13 +53,20 @@ public class DBService {
 		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 5, 18, 12, 00), null);
 		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 5, 25, 12, 00), null);
 		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 5, 22, 12, 00), null);
-		
+		/*
 		Request req1 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, cou1, cli2, Arrays.asList(menu1, menu2));
 		Request req2 = new Request(null, cli3.getAddress(), null, RequestStatus.PREPARING, cou2, cli3, Arrays.asList(menu3));
 		Request req3 = new Request(null, cli4.getAddress(), null, RequestStatus.READY, cou3, cli4, Arrays.asList(menu1, menu3, menu3));
 		Request req4 = new Request(null, cli5.getAddress(), null, RequestStatus.IN_TRANSIT, cou4, cli5, Arrays.asList(menu3, menu3));
 		Request req5 = new Request(null, cli1.getAddress(), LocalDate.of(2023, 5, 8), RequestStatus.DELIVERED, cou5, cli1, Arrays.asList(menu5, menu3, menu3));
 		Request req6 = new Request(null, cli1.getAddress(), null, RequestStatus.CANCELLED, cou1, cli1, Arrays.asList(menu5, menu4, menu4));
+		*/
+		Request req1 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, null, cli2, 3, menu3.getName(), 5);
+		Request req2 = new Request(null, cli3.getAddress(), null, RequestStatus.PREPARING, null, cli3, 3, menu3.getName(), 5);
+		Request req3 = new Request(null, cli4.getAddress(), null, RequestStatus.READY, null, cli4, 4, menu4.getName(), 1);
+		Request req4 = new Request(null, cli5.getAddress(), null, RequestStatus.IN_TRANSIT, cou1, cli5,  4, menu4.getName(), 1);
+		Request req5 = new Request(null, cli1.getAddress(), LocalDate.of(2023, 5, 8), RequestStatus.DELIVERED, cou2, cli1, 5, menu5.getName(), 1);
+		Request req6 = new Request(null, cli1.getAddress(), null, RequestStatus.CANCELLED, cou3, cli1, 5, menu5.getName(), 1);
 		
 		personRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4, cli5));
 		courierRepository.saveAll(Arrays.asList(cou1, cou2, cou3, cou4, cou5));

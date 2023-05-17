@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.allanborges.restaurantAPI.domain.Menu;
-import com.allanborges.restaurantAPI.domain.Request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MenuDTO  implements Serializable {
@@ -21,7 +20,6 @@ public class MenuDTO  implements Serializable {
 	private LocalDateTime expireDate;
 	
 	private String imageUrl;
-	private Request request;
 	
 	public MenuDTO() {
 		super();
@@ -37,7 +35,6 @@ public class MenuDTO  implements Serializable {
 		this.active = menu.getActive();
 		this.expireDate = menu.getExpireDate();
 		this.imageUrl = menu.getImageUrl();
-		this.request = menu.getRequest();
 	}
 
 	public Integer getId() {
@@ -102,14 +99,6 @@ public class MenuDTO  implements Serializable {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
-	}
-
-	public Request getRequest() {
-		return request;
-	}
-
-	public void setRequest(Request request) {
-		this.request = request;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -133,13 +134,35 @@ public class MenuController {
 
             responseMenu.setStatus("OK");
             responseMenu.setStatusCode("200");
-            responseMenu.setMsg("Method addMenu Success");
+            responseMenu.setMsg("Method updateMenu Success");
             responseMenu.setResValues(updatedMenuDTO);
             
         } catch (Exception e) {
             responseMenu.setStatus("NOK");
             responseMenu.setStatusCode("500");
-            responseMenu.setMsg("Method addMenu Error: " + e.getMessage());
+            responseMenu.setMsg("Method updateMenu Error: " + e.getMessage());
+            responseMenu.setResValues(new ArrayList<>());
+        }
+        return ResponseEntity.ok().body(responseMenu);
+	}
+	
+	@DeleteMapping(value = "/deleteMenu")
+	public ResponseEntity<ResponseMenu> deleteMenu(@RequestBody MenuDTO menuDTO) {
+		ResponseMenu responseMenu = new ResponseMenu();
+		responseMenu.setSentOn(dateGenerator.generateCurrentDate());
+		responseMenu.setTransactionId(UUID.randomUUID().toString());
+		try {
+            menuService.deleteMenu(menuDTO.getId());
+
+            responseMenu.setStatus("OK");
+            responseMenu.setStatusCode("200");
+            responseMenu.setMsg("Method deleteMenu Success");
+            responseMenu.setResValues(new ArrayList<>());
+            
+        } catch (Exception e) {
+            responseMenu.setStatus("NOK");
+            responseMenu.setStatusCode("500");
+            responseMenu.setMsg("Method deleteMenu Error: " + e.getMessage());
             responseMenu.setResValues(new ArrayList<>());
         }
         return ResponseEntity.ok().body(responseMenu);

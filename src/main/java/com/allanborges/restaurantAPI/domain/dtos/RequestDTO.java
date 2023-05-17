@@ -2,11 +2,9 @@ package com.allanborges.restaurantAPI.domain.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 import com.allanborges.restaurantAPI.domain.Client;
 import com.allanborges.restaurantAPI.domain.Courier;
-import com.allanborges.restaurantAPI.domain.Menu;
 import com.allanborges.restaurantAPI.domain.Request;
 import com.allanborges.restaurantAPI.domain.enums.RequestStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,7 +27,9 @@ public class RequestDTO implements Serializable {
 	
 	private Courier courier;
 	private Client client;
-	private List<Menu> menus;
+	private Integer requestedMenuId;
+	private String requestedMenuName;
+	private Integer requestedQuantity;
 
 	public RequestDTO() {
 		super();
@@ -43,7 +43,9 @@ public class RequestDTO implements Serializable {
 		this.requestStatus = request.getRequestStatus();
 		this.courier = request.getCourier();
 		this.client = request.getClient();
-		this.menus = request.getMenus();
+		this.requestedMenuId = request.getRequestedMenuId();
+		this.requestedMenuName = request.getRequestedMenuName();
+		this.requestedQuantity = request.getRequestedQuantity();
 	}
 
 	public Integer getId() {
@@ -110,12 +112,28 @@ public class RequestDTO implements Serializable {
 		this.courier = courier;
 	}
 
-	public List<Menu> getMenus() {
-		return menus;
+	public Integer getRequestedMenuId() {
+		return requestedMenuId;
 	}
 
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
+	public void setRequestedMenuId(Integer requestedMenuId) {
+		this.requestedMenuId = requestedMenuId;
+	}
+
+	public String getRequestedMenuName() {
+		return requestedMenuName;
+	}
+
+	public void setRequestedMenuName(String requestedMenuName) {
+		this.requestedMenuName = requestedMenuName;
+	}
+
+	public Integer getRequestedQuantity() {
+		return requestedQuantity;
+	}
+
+	public void setRequestedQuantity(Integer requestedQuantity) {
+		this.requestedQuantity = requestedQuantity;
 	}
 	
 }

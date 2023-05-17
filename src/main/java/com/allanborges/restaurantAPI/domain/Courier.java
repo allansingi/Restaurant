@@ -40,12 +40,12 @@ public class Courier extends Person implements Serializable {
 		this.createDate = courierDTO.getCreateDate();
 	}
 
-	public List<Request> getOrders() {
+	public List<Request> getRequests() {
 		return requests;
 	}
 
-	public void setOrders(List<Request> orders) {
-		this.requests = orders;
+	public void setOrders(List<Request> requests) {
+		this.requests = requests;
 	}
 	
 }
