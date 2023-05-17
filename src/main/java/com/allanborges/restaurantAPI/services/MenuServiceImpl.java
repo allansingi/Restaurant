@@ -52,8 +52,13 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Menu updateMenu(MenuDTO menuDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		if(menuDTO.getName() == null || menuDTO.getDescription() == null || menuDTO.getPrice() == null || menuDTO.getQuantity() == null || menuDTO.getActive() == null || menuDTO.getExpireDate() == null)
+			throw new MethodArgumentNotValidException("Fields NAME, DESCRIPTION, PRICE, QUANTITY, ACTIVE and EXPIREDATE are mandatory");
+		else {
+			Menu currentMenu = getMenuById(menuDTO.getId());
+			currentMenu = new Menu(menuDTO);
+			return menuRepository.save(currentMenu);
+		}
 	}
 
 }

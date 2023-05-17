@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -112,6 +110,31 @@ public class MenuController {
             responseMenu.setStatusCode("200");
             responseMenu.setMsg("Method addMenu Success");
             responseMenu.setResValues(addedMenuDTO);
+            
+        } catch (Exception e) {
+            responseMenu.setStatus("NOK");
+            responseMenu.setStatusCode("500");
+            responseMenu.setMsg("Method addMenu Error: " + e.getMessage());
+            responseMenu.setResValues(new ArrayList<>());
+        }
+        return ResponseEntity.ok().body(responseMenu);
+	}
+	
+	@PostMapping(value = "/updateMenu")
+	public ResponseEntity<ResponseMenu> updateMenu(@RequestBody MenuDTO menuDTO) {
+		ResponseMenu responseMenu = new ResponseMenu();
+		responseMenu.setSentOn(dateGenerator.generateCurrentDate());
+		responseMenu.setTransactionId(UUID.randomUUID().toString());
+		try {
+            Menu currentMenu = menuService.updateMenu(menuDTO);
+            List<Menu> updatedMenuList = new ArrayList<>();
+            updatedMenuList.add(currentMenu);
+            List<MenuDTO> updatedMenuDTO = updatedMenuList.stream().map(x -> new MenuDTO(x)).collect(Collectors.toList());
+
+            responseMenu.setStatus("OK");
+            responseMenu.setStatusCode("200");
+            responseMenu.setMsg("Method addMenu Success");
+            responseMenu.setResValues(updatedMenuDTO);
             
         } catch (Exception e) {
             responseMenu.setStatus("NOK");
