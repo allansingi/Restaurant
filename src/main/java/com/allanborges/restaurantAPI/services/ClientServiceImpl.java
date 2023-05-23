@@ -74,7 +74,7 @@ public class ClientServiceImpl implements ClientService {
 			clientRepository.deleteById(client.getId());
 	}
 	
-	
+	//Auxiliary Methods
 	private void validateNifEmailAndAddress(ClientDTO clientDTO) {
 		Optional<Person> obj = personRepository.findByNif(clientDTO.getNif());
 		if(obj.isPresent() && obj.get().getId() != clientDTO.getId())

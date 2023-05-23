@@ -32,23 +32,24 @@ public class ClientController {
 
 	@GetMapping(value = "/clientList")
 	public ResponseEntity<ResponseClient> clientList() {
-		ResponseClient responseclient = new ResponseClient();
-		responseclient.setSentOn(dateGenerator.generateCurrentDate());
-		responseclient.setTransactionId(UUID.randomUUID().toString());
+		ResponseClient responseClient = new ResponseClient();
+		responseClient.setSentOn(dateGenerator.generateCurrentDate());
+		responseClient.setTransactionId(UUID.randomUUID().toString());
 		try {
             List<Client> list = clientService.getAllClient();
             List<ClientDTO> listDTO = list.stream().map(x -> new ClientDTO(x)).collect(Collectors.toList());
-            responseclient.setStatus("OK");
-            responseclient.setStatusCode("200");
-            responseclient.setMsg("Method getAllClient Success");
-            responseclient.setResValues(listDTO);
+            
+            responseClient.setStatus("OK");
+            responseClient.setStatusCode("200");
+            responseClient.setMsg("Method getAllClient Success");
+            responseClient.setResValues(listDTO);
         } catch (Exception e) {
-        	responseclient.setStatus("NOK");
-        	responseclient.setStatusCode("500");
-        	responseclient.setMsg("Method getAllClient Error: " + e.getMessage());
-        	responseclient.setResValues(new ArrayList<>());
+        	responseClient.setStatus("NOK");
+        	responseClient.setStatusCode("500");
+        	responseClient.setMsg("Method getAllClient Error: " + e.getMessage());
+        	responseClient.setResValues(new ArrayList<>());
         }
-        return ResponseEntity.ok().body(responseclient);
+        return ResponseEntity.ok().body(responseClient);
 	}
 	
 	@PostMapping(value = "/clientById")

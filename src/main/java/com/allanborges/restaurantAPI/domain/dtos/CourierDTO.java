@@ -26,6 +26,7 @@ public class CourierDTO implements Serializable {
 
 	public CourierDTO() {
 		super();
+		addPersonProfile(PersonProfile.CLIENT);
 	}
 
 	public CourierDTO(Courier courier) {
@@ -38,6 +39,7 @@ public class CourierDTO implements Serializable {
 		this.password = courier.getPassword();
 		this.profiles = courier.getProfiles().stream().map(x -> x.getCode()).collect(Collectors.toSet());
 		this.createDate = courier.getCreateDate();
+		addPersonProfile(PersonProfile.CLIENT);
 	}
 
 	public Integer getId() {
@@ -92,8 +94,8 @@ public class CourierDTO implements Serializable {
 		return profiles.stream().map(x -> PersonProfile.toEnum(x)).collect(Collectors.toSet());
 	}
 
-	public void setProfiles(Set<Integer> profiles) {
-		this.profiles = profiles;
+	public void addPersonProfile(PersonProfile personProfile) {
+		this.profiles.add(personProfile.getCode());
 	}
 
 	public LocalDateTime getCreateDate() {
