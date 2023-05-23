@@ -1,6 +1,5 @@
 package com.allanborges.restaurantAPI.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public class MenuServiceImpl implements MenuService {
 			Optional<Menu> menu = menuRepository.findById(id);
 			return menu.get();
 		} catch (Exception e) {
-			throw new ObjectNotFoundException("Object with id " + id + " not found");
+			throw new ObjectNotFoundException("Menu with id " + id + " not found");
 		}
 	}
 	
@@ -70,12 +69,10 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public void deleteMenu(Integer id) {
-		getMenuById(id);
-		List<Request> list = new ArrayList<>();
-		list = requestRepository.findByRequestedMenuId(id);
-		
+		Menu menu = getMenuById(id);
+		List<Request> list = requestRepository.findByRequestedMenuId(id);
 		if(!list.isEmpty()) {
-			throw new DataIntegrityViolationException("The Menu has a request and can not be deleted!");
+			throw new DataIntegrityViolationException("Menu " + menu.getId() + " has a request and can not be deleted!");
 		}
 		
 		menuRepository.deleteById(id);

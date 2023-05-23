@@ -61,17 +61,18 @@ public class DBService {
 		Request req5 = new Request(null, cli1.getAddress(), LocalDate.of(2023, 5, 8), RequestStatus.DELIVERED, cou5, cli1, Arrays.asList(menu5, menu3, menu3));
 		Request req6 = new Request(null, cli1.getAddress(), null, RequestStatus.CANCELLED, cou1, cli1, Arrays.asList(menu5, menu4, menu4));
 		*/
-		Request req1 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, null, cli2, 3, menu3.getName(), 5);
+		Request req1 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, null, null, null, null, 5);
 		Request req2 = new Request(null, cli3.getAddress(), null, RequestStatus.PREPARING, null, cli3, 3, menu3.getName(), 5);
 		Request req3 = new Request(null, cli4.getAddress(), null, RequestStatus.READY, null, cli4, 4, menu4.getName(), 1);
 		Request req4 = new Request(null, cli5.getAddress(), null, RequestStatus.IN_TRANSIT, cou1, cli5,  4, menu4.getName(), 1);
 		Request req5 = new Request(null, cli1.getAddress(), LocalDate.of(2023, 5, 8), RequestStatus.DELIVERED, cou2, cli1, 5, menu5.getName(), 1);
 		Request req6 = new Request(null, cli1.getAddress(), null, RequestStatus.CANCELLED, cou3, cli1, 5, menu5.getName(), 1);
+		Request req7 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, null, null, null, null, null);
 		
 		personRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4, cli5));
 		courierRepository.saveAll(Arrays.asList(cou1, cou2, cou3, cou4, cou5));
 		menuRepository.saveAll(Arrays.asList(menu1, menu2, menu3, menu4, menu5));
-		requestRepository.saveAll(Arrays.asList(req1, req2, req3, req4, req5, req6));
+		requestRepository.saveAll(Arrays.asList(req1, req2, req3, req4, req5, req6, req7));
 		
 	}
 

@@ -38,6 +38,7 @@ public class MenuController {
 		try {
             List<Menu> list = menuService.getAllMenu();
             List<MenuDTO> listDTO = list.stream().map(x -> new MenuDTO(x)).collect(Collectors.toList());
+            
             responseMenu.setStatus("OK");
             responseMenu.setStatusCode("200");
             responseMenu.setMsg("Method getAllMenu Success");
@@ -59,6 +60,7 @@ public class MenuController {
 		try {
             List<Menu> list = menuService.getActiveMenu();
             List<MenuDTO> listDTO = list.stream().map(x -> new MenuDTO(x)).collect(Collectors.toList());
+            
             responseMenu.setStatus("OK");
             responseMenu.setStatusCode("200");
             responseMenu.setMsg("Method getActiveMenu Success");
@@ -146,7 +148,7 @@ public class MenuController {
         return ResponseEntity.ok().body(responseMenu);
 	}
 	
-	@DeleteMapping(value = "/deleteMenu")
+	@DeleteMapping(value = "/deleteMenuById")
 	public ResponseEntity<ResponseMenu> deleteMenu(@RequestBody MenuDTO menuDTO) {
 		ResponseMenu responseMenu = new ResponseMenu();
 		responseMenu.setSentOn(dateGenerator.generateCurrentDate());

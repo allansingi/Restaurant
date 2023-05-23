@@ -26,6 +26,7 @@ public class ClientDTO implements Serializable {
 
 	public ClientDTO() {
 		super();
+		addPersonProfile(PersonProfile.CLIENT);
 	}
 
 	public ClientDTO(Client client) {
@@ -38,6 +39,7 @@ public class ClientDTO implements Serializable {
 		this.password = client.getPassword();
 		this.profiles = client.getProfiles().stream().map(x -> x.getCode()).collect(Collectors.toSet());
 		this.createDate = client.getCreateDate();
+		addPersonProfile(PersonProfile.CLIENT);
 	}
 
 	public Integer getId() {
@@ -92,8 +94,8 @@ public class ClientDTO implements Serializable {
 		return profiles.stream().map(x -> PersonProfile.toEnum(x)).collect(Collectors.toSet());
 	}
 
-	public void setProfiles(Set<Integer> profiles) {
-		this.profiles = profiles;
+	public void addPersonProfile(PersonProfile personProfile) {
+		this.profiles.add(personProfile.getCode());
 	}
 
 	public LocalDateTime getCreateDate() {
