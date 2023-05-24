@@ -1,7 +1,7 @@
 package com.allanborges.restaurantAPI.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -24,13 +24,14 @@ public class Request implements Serializable {
 	private String deliveryAddress;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDate createDate= LocalDate.now();
+	private LocalDateTime createDate= LocalDateTime.now();
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDate updateDate;
+	private LocalDateTime updateDate;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDate deliveredDate;
+	private LocalDateTime deliveredDate;
+	
 	private RequestStatus requestStatus;
 	
 	@ManyToOne
@@ -49,7 +50,8 @@ public class Request implements Serializable {
 		super();
 	}
 
-	public Request(Integer id, String deliveryAddress, LocalDate deliveredDate, RequestStatus requestStatus, Courier courier, Client client, Integer requestedMenuId, String requestedMenuName, Integer requestedQuantity) {
+	public Request(Integer id, String deliveryAddress, LocalDateTime deliveredDate, RequestStatus requestStatus,
+			Courier courier, Client client, Integer requestedMenuId, String requestedMenuName, Integer requestedQuantity) {
 		super();
 		this.id = id;
 		this.deliveryAddress = deliveryAddress;
@@ -61,7 +63,6 @@ public class Request implements Serializable {
 		this.requestedMenuName = requestedMenuName;
 		this.requestedQuantity = requestedQuantity;
 	}
-
 	
 	
 	public Integer getId() {
@@ -80,27 +81,27 @@ public class Request implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	public LocalDate getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDate createDate) {
+	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 
-	public LocalDate getUpdateDate() {
+	public LocalDateTime getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(LocalDate updateDate) {
+	public void setUpdateDate(LocalDateTime updateDate) {
 		this.updateDate = updateDate;
 	}
 
-	public LocalDate getDeliveredDate() {
+	public LocalDateTime getDeliveredDate() {
 		return deliveredDate;
 	}
 
-	public void setDeliveredDate(LocalDate deliveredDate) {
+	public void setDeliveredDate(LocalDateTime deliveredDate) {
 		this.deliveredDate = deliveredDate;
 	}
 

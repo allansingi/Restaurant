@@ -53,96 +53,96 @@ public class ClientController {
 	}
 	
 	@PostMapping(value = "/clientById")
-	public ResponseEntity<ResponseClient> clienById(@RequestBody Client client) {
-		ResponseClient responseclient = new ResponseClient();
-		responseclient.setSentOn(dateGenerator.generateCurrentDate());
-		responseclient.setTransactionId(UUID.randomUUID().toString());
+	public ResponseEntity<ResponseClient> clientById(@RequestBody Client client) {
+		ResponseClient responseClient = new ResponseClient();
+		responseClient.setSentOn(dateGenerator.generateCurrentDate());
+		responseClient.setTransactionId(UUID.randomUUID().toString());
 		try {
             Client currentClient = clientService.getClientById(client.getId());
             List<Client> currentClientList = new ArrayList<>();
             currentClientList.add(currentClient);
             List<ClientDTO> listDTO = currentClientList.stream().map(x -> new ClientDTO(x)).collect(Collectors.toList());
             
-            responseclient.setStatus("OK");
-            responseclient.setStatusCode("200");
-            responseclient.setMsg("Method getClientById Success");
-            responseclient.setResValues(listDTO);
+            responseClient.setStatus("OK");
+            responseClient.setStatusCode("200");
+            responseClient.setMsg("Method getClientById Success");
+            responseClient.setResValues(listDTO);
         } catch (Exception e) {
-        	responseclient.setStatus("NOK");
-        	responseclient.setStatusCode("500");
-        	responseclient.setMsg("Method getClientById Error: " + e.getMessage());
-        	responseclient.setResValues(new ArrayList<>());
+        	responseClient.setStatus("NOK");
+        	responseClient.setStatusCode("500");
+        	responseClient.setMsg("Method getClientById Error: " + e.getMessage());
+        	responseClient.setResValues(new ArrayList<>());
         }
-        return ResponseEntity.ok().body(responseclient);
+        return ResponseEntity.ok().body(responseClient);
 	}
 	
 	@PostMapping(value = "/addClient")
 	public ResponseEntity<ResponseClient> addClient(@RequestBody ClientDTO clientDTO) {
-		ResponseClient responseclient = new ResponseClient();
-		responseclient.setSentOn(dateGenerator.generateCurrentDate());
-		responseclient.setTransactionId(UUID.randomUUID().toString());
+		ResponseClient responseClient = new ResponseClient();
+		responseClient.setSentOn(dateGenerator.generateCurrentDate());
+		responseClient.setTransactionId(UUID.randomUUID().toString());
 		try {
             Client currentClient = clientService.addClient(clientDTO);
             List<Client> currentClientList = new ArrayList<>();
             currentClientList.add(currentClient);
             List<ClientDTO> listDTO = currentClientList.stream().map(x -> new ClientDTO(x)).collect(Collectors.toList());
             
-            responseclient.setStatus("OK");
-            responseclient.setStatusCode("200");
-            responseclient.setMsg("Method addClient Success");
-            responseclient.setResValues(listDTO);
+            responseClient.setStatus("OK");
+            responseClient.setStatusCode("200");
+            responseClient.setMsg("Method addClient Success");
+            responseClient.setResValues(listDTO);
         } catch (Exception e) {
-        	responseclient.setStatus("NOK");
-        	responseclient.setStatusCode("500");
-        	responseclient.setMsg("Method addClient Error: " + e.getMessage());
-        	responseclient.setResValues(new ArrayList<>());
+        	responseClient.setStatus("NOK");
+        	responseClient.setStatusCode("500");
+        	responseClient.setMsg("Method addClient Error: " + e.getMessage());
+        	responseClient.setResValues(new ArrayList<>());
         }
-        return ResponseEntity.ok().body(responseclient);
+        return ResponseEntity.ok().body(responseClient);
 	}
 	
 	@PostMapping(value = "/updateClient")
 	public ResponseEntity<ResponseClient> updateClient(@RequestBody ClientDTO clientDTO) {
-		ResponseClient responseclient = new ResponseClient();
-		responseclient.setSentOn(dateGenerator.generateCurrentDate());
-		responseclient.setTransactionId(UUID.randomUUID().toString());
+		ResponseClient responseClient = new ResponseClient();
+		responseClient.setSentOn(dateGenerator.generateCurrentDate());
+		responseClient.setTransactionId(UUID.randomUUID().toString());
 		try {
             Client currentClient = clientService.updateClient(clientDTO);
             List<Client> currentClientList = new ArrayList<>();
             currentClientList.add(currentClient);
             List<ClientDTO> listDTO = currentClientList.stream().map(x -> new ClientDTO(x)).collect(Collectors.toList());
             
-            responseclient.setStatus("OK");
-            responseclient.setStatusCode("200");
-            responseclient.setMsg("Method updateClient Success");
-            responseclient.setResValues(listDTO);
+            responseClient.setStatus("OK");
+            responseClient.setStatusCode("200");
+            responseClient.setMsg("Method updateClient Success");
+            responseClient.setResValues(listDTO);
         } catch (Exception e) {
-        	responseclient.setStatus("NOK");
-        	responseclient.setStatusCode("500");
-        	responseclient.setMsg("Method updateClient Error: " + e.getMessage());
-        	responseclient.setResValues(new ArrayList<>());
+        	responseClient.setStatus("NOK");
+        	responseClient.setStatusCode("500");
+        	responseClient.setMsg("Method updateClient Error: " + e.getMessage());
+        	responseClient.setResValues(new ArrayList<>());
         }
-        return ResponseEntity.ok().body(responseclient);
+        return ResponseEntity.ok().body(responseClient);
 	}
 	
 	@DeleteMapping(value = "/deleteClientById")
 	public ResponseEntity<ResponseClient> deleteClient(@RequestBody ClientDTO clientDTO) {
-		ResponseClient responseclient = new ResponseClient();
-		responseclient.setSentOn(dateGenerator.generateCurrentDate());
-		responseclient.setTransactionId(UUID.randomUUID().toString());
+		ResponseClient responseClient = new ResponseClient();
+		responseClient.setSentOn(dateGenerator.generateCurrentDate());
+		responseClient.setTransactionId(UUID.randomUUID().toString());
 		try {
             clientService.deleteClient(clientDTO.getId());
             
-            responseclient.setStatus("OK");
-            responseclient.setStatusCode("200");
-            responseclient.setMsg("Method deleteClient Success");
-            responseclient.setResValues(new ArrayList<>());
+            responseClient.setStatus("OK");
+            responseClient.setStatusCode("200");
+            responseClient.setMsg("Method deleteClient Success");
+            responseClient.setResValues(new ArrayList<>());
         } catch (Exception e) {
-        	responseclient.setStatus("NOK");
-        	responseclient.setStatusCode("500");
-        	responseclient.setMsg("Method deleteClient Error: " + e.getMessage());
-        	responseclient.setResValues(new ArrayList<>());
+        	responseClient.setStatus("NOK");
+        	responseClient.setStatusCode("500");
+        	responseClient.setMsg("Method deleteClient Error: " + e.getMessage());
+        	responseClient.setResValues(new ArrayList<>());
         }
-        return ResponseEntity.ok().body(responseclient);
+        return ResponseEntity.ok().body(responseClient);
 	}
 	
 }
