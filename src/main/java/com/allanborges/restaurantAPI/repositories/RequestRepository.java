@@ -13,8 +13,5 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	
 	@Query(value = "SELECT * FROM REQUEST WHERE request_status = 2", nativeQuery = true)
     List<Request> findReadyRequests();
-	/*
-	@Query(value = "SELECT * FROM request WHERE courier_id IS NULL", nativeQuery = true)
-    List<Request> findNullCourierRequests();
-	*/
+	
 }

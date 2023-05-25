@@ -79,7 +79,7 @@ public class RequestController {
 		responseRequest.setSentOn(dateGenerator.generateCurrentDate());
 		responseRequest.setTransactionId(UUID.randomUUID().toString());
 		try {
-            Request currentRequest = requestService.getRequestById(request);
+            Request currentRequest = requestService.getRequestById(request.getId());
             List<Request> currentRequestList = new ArrayList<>();
             currentRequestList.add(currentRequest);
             List<RequestDTO> listDTO = currentRequestList.stream().map(x -> new RequestDTO(x)).collect(Collectors.toList());
@@ -108,7 +108,7 @@ public class RequestController {
             currentRequestList.add(currentRequest);
             List<RequestDTO> listDTO = currentRequestList.stream().map(x -> new RequestDTO(x)).collect(Collectors.toList());
             
-            responseRequest.setStatus("OK");
+            responseRequest.setStatus("OK");	
             responseRequest.setStatusCode("200");
             responseRequest.setMsg("Method createRequest Success");
             responseRequest.setResValues(listDTO);
@@ -121,6 +121,28 @@ public class RequestController {
         return ResponseEntity.ok().body(responseRequest);
 	}
 	
-	
+	@PostMapping(value = "/updateRequest")
+	public ResponseEntity<ResponseRequest> updateRequest(@RequestBody RequestDTO requestDTO) {
+		ResponseRequest responseRequest = new ResponseRequest();
+		responseRequest.setSentOn(dateGenerator.generateCurrentDate());
+		responseRequest.setTransactionId(UUID.randomUUID().toString());
+		try {
+            Request currentRequest = requestService.createRequest(requestDTO);
+            List<Request> currentRequestList = new ArrayList<>();
+            currentRequestList.add(currentRequest);
+            List<RequestDTO> listDTO = currentRequestList.stream().map(x -> new RequestDTO(x)).collect(Collectors.toList());
+            
+            responseRequest.setStatus("OK");	
+            responseRequest.setStatusCode("200");
+            responseRequest.setMsg("Method createRequest Success");
+            responseRequest.setResValues(listDTO);
+        } catch (Exception e) {
+        	responseRequest.setStatus("NOK");
+        	responseRequest.setStatusCode("500");
+        	responseRequest.setMsg("Method createRequest Error: " + e.getMessage());
+        	responseRequest.setResValues(new ArrayList<>());
+        }
+        return ResponseEntity.ok().body(responseRequest);
+	}
 	
 }

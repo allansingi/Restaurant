@@ -12,12 +12,15 @@ import com.allanborges.restaurantAPI.domain.Menu;
 import com.allanborges.restaurantAPI.domain.Request;
 import com.allanborges.restaurantAPI.domain.dtos.RequestDTO;
 import com.allanborges.restaurantAPI.domain.enums.RequestStatus;
-import com.allanborges.restaurantAPI.repositories.ClientRepository;
-import com.allanborges.restaurantAPI.repositories.CourierRepository;
 import com.allanborges.restaurantAPI.repositories.MenuRepository;
 import com.allanborges.restaurantAPI.repositories.RequestRepository;
+import com.allanborges.restaurantAPI.services.exceptions.InsufficientMenuQuantityException;
 import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidException;
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
+import com.allanborges.restaurantAPI.services.exceptions.RequestedMenuNotAvailableException;
+import com.allanborges.restaurantAPI.services.interfaces.ClientService;
+import com.allanborges.restaurantAPI.services.interfaces.CourierService;
+import com.allanborges.restaurantAPI.services.interfaces.MenuService;
 import com.allanborges.restaurantAPI.services.interfaces.RequestService;
 
 @Service
@@ -27,10 +30,13 @@ public class RequestServiceImpl implements RequestService {
 	private RequestRepository requestRepository;
 	
 	@Autowired
-	private ClientRepository clientRepository;
+	private ClientService clientService;
 	
 	@Autowired
-	private CourierRepository courierRepository;
+	private CourierService courierService;
+	
+	@Autowired
+	private MenuService menuService;
 	
 	@Autowired
 	private MenuRepository menuRepository;
@@ -46,35 +52,41 @@ public class RequestServiceImpl implements RequestService {
 	}
 
 	@Override
-	public Request getRequestById(Request request) {
-		Optional<Request> obj = requestRepository.findById(request.getId());
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Request with id " + request.getId() + " not found"));
+	public Request getRequestById(Integer requestId) {
+		Optional<Request> obj = requestRepository.findById(requestId);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Request with id " + requestId + " not found"));
 	}
 
 	@Override
 	public Request createRequest(RequestDTO requestDTO) {
-		return requestRepository.save(newRequest(requestDTO));
-	}
-	
-	
-	private Request newRequest(RequestDTO requestDTO) {
-		Optional<Client> client = clientRepository.findById(requestDTO.getClientId());
-		Optional<Courier> courier = courierRepository.findById(6);
-		Optional<Menu> menu = menuRepository.findById(requestDTO.getRequestedMenuId());
+		Client client = clientService.getClientById(requestDTO.getClientId());
+		Courier courier = courierService.getCourierById(6);
+		
+		List<Menu> activeMenuList = menuService.getActiveMenu();
+		Menu requestedMenu = menuService.getMenuById(requestDTO.getRequestedMenuId());
+		if(!activeMenuList.contains(requestedMenu))
+			throw new RequestedMenuNotAvailableException("The requested menu is not available");
 		
 		Request request = new Request();
 		
-		request.setClient(client.get());
-		request.setDeliveryAddress(client.get().getAddress());
-		request.setRequestedMenuId(menu.get().getId());
-		request.setRequestedMenuName(menu.get().getName());
+		request.setClient(client);
+		request.setDeliveryAddress(client.getAddress());
+		
+		request.setRequestedMenuId(requestedMenu.getId());
+		request.setRequestedMenuName(requestedMenu.getName());
 		if(requestDTO.getRequestedQuantity() == null)
 			throw new MethodArgumentNotValidException("Field RequestedQuantity is MANDATORY!");
+		else if(requestDTO.getRequestedQuantity() > requestedMenu.getQuantity() || requestedMenu.getQuantity() == 0)
+			throw new InsufficientMenuQuantityException("Insufficient menu availability, there are " + requestedMenu.getQuantity() + " left");
+		requestedMenu.setQuantity(requestedMenu.getQuantity() - requestDTO.getRequestedQuantity());
+		menuRepository.save(requestedMenu);
+		
 		request.setRequestedQuantity(requestDTO.getRequestedQuantity());
 		request.setRequestStatus(RequestStatus.ORDER_RECEIVED);
-		request.setCourier(courier.get());
+		request.setCourier(courier);
 		
-		return request;
+		return requestRepository.save(request);
 	}
+
 
 }
