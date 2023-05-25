@@ -21,6 +21,18 @@ public class Request implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
+	
+	@ManyToOne
+	@JoinColumn(name = "courier_id")
+	private Courier courier;
+	
+	private Integer requestedMenuId;
+	private String requestedMenuName;
+	private Integer requestedQuantity;
 	private String deliveryAddress;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -34,36 +46,20 @@ public class Request implements Serializable {
 	
 	private RequestStatus requestStatus;
 	
-	@ManyToOne
-	@JoinColumn(name = "courier_id")
-	private Courier courier;
-	
-	@ManyToOne
-	@JoinColumn(name = "client_id")
-	private Client client;
-	
-	private Integer requestedMenuId;
-	private String requestedMenuName;
-	private Integer requestedQuantity;
 
 	public Request() {
 		super();
 	}
 
-	public Request(Integer id, String deliveryAddress, LocalDateTime deliveredDate, RequestStatus requestStatus,
-			Courier courier, Client client, Integer requestedMenuId, String requestedMenuName, Integer requestedQuantity) {
+	public Request(Integer id, Client client, Courier courier, Integer requestedMenuId, Integer requestedQuantity, RequestStatus requestStatus) {
 		super();
 		this.id = id;
-		this.deliveryAddress = deliveryAddress;
-		this.deliveredDate = deliveredDate;
-		this.requestStatus = requestStatus;
-		this.courier = courier;
 		this.client = client;
+		this.courier = courier;
 		this.requestedMenuId = requestedMenuId;
-		this.requestedMenuName = requestedMenuName;
 		this.requestedQuantity = requestedQuantity;
+		this.requestStatus = requestStatus;
 	}
-	
 	
 	public Integer getId() {
 		return id;
@@ -113,6 +109,14 @@ public class Request implements Serializable {
 		this.requestStatus = requestStatus;
 	}
 
+	public Courier getCourier() {
+		return courier;
+	}
+
+	public void setCourier(Courier courier) {
+		this.courier = courier;
+	}
+
 	public Client getClient() {
 		return client;
 	}
@@ -121,14 +125,6 @@ public class Request implements Serializable {
 		this.client = client;
 	}
 
-	public Courier getCourier() {
-		return courier;
-	}
-
-	public void setCourier(Courier courier) {
-		this.courier = courier;
-	}
-	
 	public Integer getRequestedMenuId() {
 		return requestedMenuId;
 	}
@@ -152,7 +148,7 @@ public class Request implements Serializable {
 	public void setRequestedQuantity(Integer requestedQuantity) {
 		this.requestedQuantity = requestedQuantity;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

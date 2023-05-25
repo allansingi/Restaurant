@@ -37,12 +37,8 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Menu getMenuById(Integer id) {
-		try {
-			Optional<Menu> menu = menuRepository.findById(id);
-			return menu.get();
-		} catch (Exception e) {
-			throw new ObjectNotFoundException("Menu with id " + id + " not found");
-		}
+		Optional<Menu> menu = menuRepository.findById(id);
+		return menu.orElseThrow(() -> new ObjectNotFoundException("Menu with id " + id + " not found"));
 	}
 	
 	@Override

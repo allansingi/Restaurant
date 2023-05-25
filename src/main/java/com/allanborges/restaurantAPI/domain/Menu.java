@@ -32,8 +32,7 @@ public class Menu implements Serializable {
 		super();
 	}
 
-	public Menu(Integer id, String name, String description, Double price, Integer quantity, Boolean active,
-			LocalDateTime expireDate, String imageUrl) {
+	public Menu(Integer id, String name, String description, Double price, Integer quantity, Boolean active, LocalDateTime expireDate, String imageUrl) {
 		super();
 		this.id = id;
 		this.name = name;

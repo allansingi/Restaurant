@@ -31,12 +31,8 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public Client getClientById(Integer id) {
-		try {
-			Optional<Client> client = clientRepository.findById(id);
-			return client.get();
-		} catch (Exception e) {
-			throw new ObjectNotFoundException("Client with id " + id + " not found");
-		}
+		Optional<Client> client = clientRepository.findById(id);
+		return client.orElseThrow(() -> new ObjectNotFoundException("Client with id " + id + " not found"));
 	}
 
 	@Override

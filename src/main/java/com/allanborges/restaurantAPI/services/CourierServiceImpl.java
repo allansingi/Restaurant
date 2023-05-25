@@ -31,12 +31,8 @@ public class CourierServiceImpl implements CourierService {
 
 	@Override
 	public Courier getCourierById(Integer id) {
-		try {
-			Optional<Courier> courier = courierRepository.findById(id);
-			return courier.get();
-		} catch (Exception e) {
-			throw new ObjectNotFoundException("Courier id " + id + " not found");
-		}
+		Optional<Courier> courier = courierRepository.findById(id);
+		return courier.orElseThrow(() -> new ObjectNotFoundException("Courier id " + id + " not found"));
 	}
 
 	@Override

@@ -10,7 +10,14 @@ public class RequestDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	private Integer clientId;
+	private String clientName;
 	private String deliveryAddress;
+	private Integer requestedMenuId;
+	private String requestedMenuName;
+	private Integer requestedQuantity;
+	private Integer courierId;
+	private String courierName;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createDate= LocalDateTime.now();
@@ -22,16 +29,6 @@ public class RequestDTO implements Serializable {
 	private LocalDateTime deliveredDate;
 	
 	private Integer requestStatus;
-	
-	private Integer clientId;
-	private String clientName;
-	
-	private Integer courierId;
-	private String courierName;
-	
-	private Integer requestedMenuId;
-	private String requestedMenuName;
-	private Integer requestedQuantity;
 
 	public RequestDTO() {
 		super();
@@ -40,17 +37,18 @@ public class RequestDTO implements Serializable {
 	public RequestDTO(Request request) {
 		super();
 		this.id = request.getId();
-		this.deliveryAddress = request.getDeliveryAddress();
-		this.updateDate = request.getUpdateDate();
-		this.deliveredDate = request.getDeliveredDate();
-		this.requestStatus = request.getRequestStatus().getCode();
 		this.clientId = request.getClient().getId();
 		this.clientName = request.getClient().getName();
-		this.courierId = request.getCourier().getId();
-		this.courierName = request.getCourier().getName();
 		this.requestedMenuId = request.getRequestedMenuId();
 		this.requestedMenuName = request.getRequestedMenuName();
 		this.requestedQuantity = request.getRequestedQuantity();
+		this.deliveryAddress = request.getDeliveryAddress();
+		this.courierId = request.getCourier().getId();
+		this.courierName = request.getCourier().getName();
+		this.createDate = request.getCreateDate();
+		this.updateDate = request.getUpdateDate();
+		this.deliveredDate = request.getDeliveredDate();
+		this.requestStatus = request.getRequestStatus().getCode();
 	}
 
 	public Integer getId() {
