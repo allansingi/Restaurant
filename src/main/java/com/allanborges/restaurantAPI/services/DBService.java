@@ -50,25 +50,24 @@ public class DBService {
 		
 		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDateTime.of(2023, 5, 9, 12, 00), null);
 		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, false, LocalDateTime.of(2023, 5, 27, 12, 00), null);
-		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 5, 26, 12, 00), null);
-		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 5, 27, 12, 00), null);
-		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 5, 27, 12, 00), null);
-		/*
-		Request req1 = new Request(null, cli2.getAddress(), null, RequestStatus.ORDER_RECEIVED, cou1, cli2, Arrays.asList(menu1, menu2));
-		Request req2 = new Request(null, cli3.getAddress(), null, RequestStatus.PREPARING, cou2, cli3, Arrays.asList(menu3));
-		Request req3 = new Request(null, cli4.getAddress(), null, RequestStatus.READY, cou3, cli4, Arrays.asList(menu1, menu3, menu3));
-		Request req4 = new Request(null, cli5.getAddress(), null, RequestStatus.IN_TRANSIT, cou4, cli5, Arrays.asList(menu3, menu3));
-		Request req5 = new Request(null, cli1.getAddress(), LocalDate.of(2023, 5, 8), RequestStatus.DELIVERED, cou5, cli1, Arrays.asList(menu5, menu3, menu3));
-		Request req6 = new Request(null, cli1.getAddress(), null, RequestStatus.CANCELLED, cou1, cli1, Arrays.asList(menu5, menu4, menu4));
-		*/
+		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 5, 30, 12, 00), null);
+		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 5, 30, 12, 00), null);
+		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 5, 30, 12, 00), null);
+		
 		Request req1 = new Request(null, cli1, cou1, 3, 1, RequestStatus.ORDER_RECEIVED);
 		Request req2 = new Request(null, cli1, cou1, 4, 1, RequestStatus.ORDER_RECEIVED);
 		Request req3 = new Request(null, cli1, cou1, 5, 1, RequestStatus.ORDER_RECEIVED);
+		Request req4 = new Request(null, cli2, cou1, 3, 1, RequestStatus.PREPARING);
+		Request req5 = new Request(null, cli3, cou1, 4, 2, RequestStatus.READY);
+		Request req6 = new Request(null, cli4, cou1, 5, 2, RequestStatus.READY);
+		Request req7 = new Request(null, cli4, cou2, 5, 2, RequestStatus.IN_TRANSIT);
+		Request req8 = new Request(null, cli4, cou3, 5, 2, RequestStatus.DELIVERED);
+		Request req9 = new Request(null, cli5, cou5, 5, 2, RequestStatus.CANCELLED);
 		
 		personRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4, cli5));
 		courierRepository.saveAll(Arrays.asList(cou1, cou2, cou3, cou4, cou5, cou6));
 		menuRepository.saveAll(Arrays.asList(menu1, menu2, menu3, menu4, menu5));
-		requestRepository.saveAll(Arrays.asList(req1, req2, req3));
+		requestRepository.saveAll(Arrays.asList(req1, req2, req3, req4, req5, req6, req7, req8, req9));
 		
 	}
 

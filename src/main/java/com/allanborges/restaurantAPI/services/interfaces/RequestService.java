@@ -14,6 +14,6 @@ public interface RequestService {
 	List<Request> getReadyRequests();
 	Request getRequestById(Integer requestId);
 	Request createRequest(RequestDTO requestDTO);
-	
+	Request updateRequest(RequestDTO requestDTO);
 	
 }

@@ -127,19 +127,19 @@ public class RequestController {
 		responseRequest.setSentOn(dateGenerator.generateCurrentDate());
 		responseRequest.setTransactionId(UUID.randomUUID().toString());
 		try {
-            Request currentRequest = requestService.createRequest(requestDTO);
+            Request currentRequest = requestService.updateRequest(requestDTO);
             List<Request> currentRequestList = new ArrayList<>();
             currentRequestList.add(currentRequest);
             List<RequestDTO> listDTO = currentRequestList.stream().map(x -> new RequestDTO(x)).collect(Collectors.toList());
             
             responseRequest.setStatus("OK");	
             responseRequest.setStatusCode("200");
-            responseRequest.setMsg("Method createRequest Success");
+            responseRequest.setMsg("Method updateRequest Success");
             responseRequest.setResValues(listDTO);
         } catch (Exception e) {
         	responseRequest.setStatus("NOK");
         	responseRequest.setStatusCode("500");
-        	responseRequest.setMsg("Method createRequest Error: " + e.getMessage());
+        	responseRequest.setMsg("Method updateRequest Error: " + e.getMessage());
         	responseRequest.setResValues(new ArrayList<>());
         }
         return ResponseEntity.ok().body(responseRequest);

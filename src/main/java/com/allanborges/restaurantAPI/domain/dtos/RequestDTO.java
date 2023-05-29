@@ -20,7 +20,7 @@ public class RequestDTO implements Serializable {
 	private String courierName;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createDate= LocalDateTime.now();
+	private LocalDateTime createDate;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updateDate;
