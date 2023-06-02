@@ -31,19 +31,14 @@ public class RequestServiceImpl implements RequestService {
 	
 	@Autowired
 	private RequestRepository requestRepository;
-	
 	@Autowired
 	private ClientService clientService;
-	
 	@Autowired
 	private CourierService courierService;
-	
 	@Autowired
 	private MenuService menuService;
-	
 	@Autowired
 	private MenuRepository menuRepository;
-	
 	@Autowired
 	private DateGenerator dateGenerator;
 	
@@ -68,31 +63,39 @@ public class RequestServiceImpl implements RequestService {
 	public Request createRequest(RequestDTO requestDTO) {
 		Request request = new Request();
 		
-		//Verification of existing clients and data storing if exists
-		Client client = clientService.getClientById(requestDTO.getClientId());
-		request.setClient(client);
-		request.setDeliveryAddress(client.getAddress());
+		//clientId Field
+		if(requestDTO.getClientId() == null)
+			throw new MethodArgumentNotValidException("Field clientId is MANDATORY!");
+		else {
+			Client client = clientService.getClientById(requestDTO.getClientId());
+			request.setClient(client);
+			request.setDeliveryAddress(client.getAddress());
+		}
 		
-		//MenuID Field
-		List<Menu> activeMenuList = menuService.getActiveMenu();
-		Menu requestedMenu = menuService.getMenuById(requestDTO.getRequestedMenuId());
-		if(!activeMenuList.contains(requestedMenu))
-			throw new RequestedMenuNotAvailableException("The requested menu is not available");
-		request.setRequestedMenuId(requestedMenu.getId());
-		request.setRequestedMenuName(requestedMenu.getName());
+		//requestedMenuId requestedQuantity Fields
+		if(requestDTO.getRequestedMenuId() == null || requestDTO.getRequestedQuantity() == null)
+			throw new MethodArgumentNotValidException("Fields requestedMenuId and requestedQuantity are MANDATORY!");
+		else {
+			//requestedMenuId Field
+			List<Menu> activeMenuList = menuService.getActiveMenu();
+			Menu requestedMenu = menuService.getMenuById(requestDTO.getRequestedMenuId());
+			if(!activeMenuList.contains(requestedMenu))
+				throw new RequestedMenuNotAvailableException("The requested menu is not available");
+			request.setRequestedMenuId(requestedMenu.getId());
+			request.setRequestedMenuName(requestedMenu.getName());
 		
-		//RequestedQuantity Field
-		if(requestDTO.getRequestedQuantity() == null)
-			throw new MethodArgumentNotValidException("Field RequestedQuantity is MANDATORY!");
-		else if(requestDTO.getRequestedQuantity() == 0)
-			throw new InsufficientMenuQuantityException("Cannot place a request with quantity 0");
-		else if(requestDTO.getRequestedQuantity() > requestedMenu.getQuantity())
-			throw new InsufficientMenuQuantityException("Insufficient menu availability, there are " + requestedMenu.getQuantity() + " available");
-		
-		//MenuQuantity Table Field Update
-		requestedMenu.setQuantity(requestedMenu.getQuantity() - requestDTO.getRequestedQuantity());
-		menuRepository.save(requestedMenu);
-		
+			//RequestedQuantity Field
+			if(requestDTO.getRequestedQuantity() == null)
+				throw new MethodArgumentNotValidException("Field RequestedQuantity is MANDATORY!");
+			else if(requestDTO.getRequestedQuantity() == 0)
+				throw new InsufficientMenuQuantityException("Cannot place a request with quantity 0");
+			else if(requestDTO.getRequestedQuantity() > requestedMenu.getQuantity())
+				throw new InsufficientMenuQuantityException("Insufficient menu availability, there are " + requestedMenu.getQuantity() + " available");
+			
+			//MenuQuantity Table Field Update
+			requestedMenu.setQuantity(requestedMenu.getQuantity() - requestDTO.getRequestedQuantity());
+			menuRepository.save(requestedMenu);
+		}
 		request.setRequestedQuantity(requestDTO.getRequestedQuantity());
 		request.setRequestStatus(RequestStatus.ORDER_RECEIVED);
 		request.setCreateDate(dateGenerator.generateCurrentDateTime());

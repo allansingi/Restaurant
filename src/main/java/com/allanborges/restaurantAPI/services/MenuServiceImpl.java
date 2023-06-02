@@ -21,9 +21,9 @@ public class MenuServiceImpl implements MenuService {
 	
 	@Autowired
 	private MenuRepository menuRepository;
-	
 	@Autowired
 	private RequestRepository requestRepository;
+	
 	
 	@Override
 	public List<Menu> getAllMenu() {
@@ -54,13 +54,52 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Menu updateMenu(MenuDTO menuDTO) {
-		if(menuDTO.getName() == null || menuDTO.getDescription() == null || menuDTO.getPrice() == null || menuDTO.getQuantity() == null || menuDTO.getActive() == null || menuDTO.getExpireDate() == null)
-			throw new MethodArgumentNotValidException("Fields NAME, DESCRIPTION, PRICE, QUANTITY, ACTIVE and EXPIREDATE are mandatory");
-		else {
-			Menu currentMenu = getMenuById(menuDTO.getId());
-			currentMenu = new Menu(menuDTO);
-			return menuRepository.save(currentMenu);
-		}
+		//id Field
+		Menu currentMenu = getMenuById(menuDTO.getId());
+		
+		//name Field
+		if(menuDTO.getName() == null)
+			menuDTO.setName(currentMenu.getName());
+		else
+			currentMenu.setName(menuDTO.getName());
+		
+		//menuDescription Field
+		if(menuDTO.getDescription() == null)
+			menuDTO.setDescription(currentMenu.getDescription());
+		else
+			currentMenu.setDescription(menuDTO.getDescription());
+		
+		//price Field
+		if(menuDTO.getPrice() == null)
+			menuDTO.setPrice(currentMenu.getPrice());
+		else
+			currentMenu.setPrice(menuDTO.getPrice());
+		
+		//quantity Field
+		if(menuDTO.getQuantity() == null)
+			menuDTO.setQuantity(currentMenu.getQuantity());
+		else
+			currentMenu.setQuantity(menuDTO.getQuantity());
+		
+		//active Field
+		if(menuDTO.getActive() == null)
+			menuDTO.setActive(currentMenu.getActive());
+		else
+			currentMenu.setActive(menuDTO.getActive());
+		
+		//expireDate Field
+		if(menuDTO.getExpireDate() == null)
+			menuDTO.setExpireDate(currentMenu.getExpireDate());
+		else
+			currentMenu.setExpireDate(menuDTO.getExpireDate());
+		
+		//imageURL Field
+		if(menuDTO.getImageUrl() == null)
+			menuDTO.setImageUrl(currentMenu.getImageUrl());
+		else
+			currentMenu.setImageUrl(menuDTO.getImageUrl());
+		
+		return menuRepository.save(currentMenu);
 	}
 
 	@Override

@@ -50,9 +50,9 @@ public class DBService {
 		
 		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDateTime.of(2023, 5, 9, 12, 00), null);
 		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, false, LocalDateTime.of(2023, 5, 27, 12, 00), null);
-		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 5, 30, 12, 00), null);
-		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 5, 30, 12, 00), null);
-		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 5, 30, 12, 00), null);
+		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 6, 15, 12, 00), null);
+		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 6, 15, 12, 00), null);
+		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 6, 15, 12, 00), null);
 		
 		Request req1 = new Request(null, cli1, cou1, 3, 1, RequestStatus.ORDER_RECEIVED);
 		Request req2 = new Request(null, cli1, cou1, 4, 1, RequestStatus.ORDER_RECEIVED);

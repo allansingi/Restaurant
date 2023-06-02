@@ -24,6 +24,7 @@ public class CourierServiceImpl implements CourierService {
 	@Autowired
 	private PersonRepository personRepository;
 
+	
 	@Override
 	public List<Courier> getAllCourier() {
 		return courierRepository.findAll();
@@ -49,14 +50,42 @@ public class CourierServiceImpl implements CourierService {
 
 	@Override
 	public Courier updateCourier(CourierDTO courierDTO) {
-		getCourierById(courierDTO.getId());
-		if(courierDTO.getName() == null || courierDTO.getNif() == null || courierDTO.getAddress() == null || courierDTO.getEmail() == null || courierDTO.getPassword() == null)
-			throw new MethodArgumentNotValidException("Fields NAME, NIF, ADDRESS, EMAIL and PASSWORD are mandatory");
-		else {
-			validateNifEmailAndAddress(courierDTO);
-			Courier courier = new Courier(courierDTO);
-			return courierRepository.save(courier);
-		}
+		//id Field
+		Courier currentCourier = getCourierById(courierDTO.getId());
+		
+		//name Field
+		if(courierDTO.getName() == null)
+			courierDTO.setName(currentCourier.getName());
+		else
+			currentCourier.setName(courierDTO.getName());
+		
+		//nif Field
+		if(courierDTO.getNif() == null)
+			courierDTO.setNif(currentCourier.getNif());
+		else
+			currentCourier.setNif(courierDTO.getNif());
+		
+		//address Field
+		if(courierDTO.getAddress() == null)
+			courierDTO.setAddress(currentCourier.getAddress());
+		else
+			currentCourier.setAddress(courierDTO.getAddress());
+		
+		//email Field
+		if(courierDTO.getEmail() == null)
+			courierDTO.setEmail(currentCourier.getEmail());
+		else
+			currentCourier.setEmail(courierDTO.getEmail());
+		
+		//password Field
+		if(courierDTO.getPassword() == null)
+			courierDTO.setPassword(currentCourier.getPassword());
+		else
+			currentCourier.setPassword(courierDTO.getPassword());
+		
+		validateNifEmailAndAddress(currentCourier);
+		currentCourier = new Courier(courierDTO);
+		return courierRepository.save(currentCourier);
 	}
 
 	@Override
@@ -81,6 +110,20 @@ public class CourierServiceImpl implements CourierService {
 		obj = personRepository.findByAddress(courierDTO.getAddress());
 		if(obj.isPresent() && obj.get().getId() != courierDTO.getId())
 			throw new DataIntegrityViolationException("Address " + courierDTO.getAddress() + " already in system!");
+	}
+	
+	private void validateNifEmailAndAddress(Courier courier) {
+		Optional<Person> obj = personRepository.findByNif(courier.getNif());
+		if(obj.isPresent() && obj.get().getId() != courier.getId())
+			throw new DataIntegrityViolationException("NIF " + courier.getNif() + " already in system!");
+		
+		obj = personRepository.findByEmail(courier.getEmail());
+		if(obj.isPresent() && obj.get().getId() != courier.getId())
+			throw new DataIntegrityViolationException("Email " + courier.getEmail() + " already in system!");
+		
+		obj = personRepository.findByAddress(courier.getAddress());
+		if(obj.isPresent() && obj.get().getId() != courier.getId())
+			throw new DataIntegrityViolationException("Address " + courier.getAddress() + " already in system!");
 	}
 
 }

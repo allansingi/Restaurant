@@ -24,6 +24,7 @@ public class ClientServiceImpl implements ClientService {
 	@Autowired
 	private PersonRepository personRepository;
 
+	
 	@Override
 	public List<Client> getAllClient() {
 		return clientRepository.findAll();
@@ -47,18 +48,44 @@ public class ClientServiceImpl implements ClientService {
 		}
 	}
 
-
-
 	@Override
 	public Client updateClient(ClientDTO clientDTO) {
-		getClientById(clientDTO.getId());
-		if(clientDTO.getName() == null || clientDTO.getNif() == null || clientDTO.getAddress() == null || clientDTO.getEmail() == null || clientDTO.getPassword() == null)
-			throw new MethodArgumentNotValidException("Fields NAME, NIF, ADDRESS, EMAIL and PASSWORD are mandatory");
-		else {
-			validateNifEmailAndAddress(clientDTO);
-			Client client = new Client(clientDTO);
-			return clientRepository.save(client);
-		}
+		//id Field
+		Client currentClient = getClientById(clientDTO.getId());
+		
+		//name Field
+		if(clientDTO.getName() == null)
+			clientDTO.setName(currentClient.getName());
+		else
+			currentClient.setName(clientDTO.getName());
+		
+		//nif Field
+		if(clientDTO.getNif() == null)
+			clientDTO.setNif(currentClient.getNif());
+		else
+			currentClient.setNif(clientDTO.getNif());
+		
+		//address Field
+		if(clientDTO.getAddress() == null)
+			clientDTO.setAddress(currentClient.getAddress());
+		else
+			currentClient.setAddress(clientDTO.getAddress());
+		
+		//email Field
+		if(clientDTO.getEmail() == null)
+			clientDTO.setEmail(currentClient.getEmail());
+		else
+			currentClient.setEmail(clientDTO.getEmail());
+		
+		//password Field
+		if(clientDTO.getPassword() == null)
+			clientDTO.setPassword(currentClient.getPassword());
+		else
+			currentClient.setPassword(clientDTO.getPassword());
+		
+		validateNifEmailAndAddress(currentClient);
+		currentClient = new Client(clientDTO);
+		return clientRepository.save(currentClient);
 	}
 
 	@Override
@@ -71,6 +98,20 @@ public class ClientServiceImpl implements ClientService {
 	}
 	
 	//Auxiliary Methods
+	private void validateNifEmailAndAddress(Client client) {
+		Optional<Person> obj = personRepository.findByNif(client.getNif());
+		if(obj.isPresent() && obj.get().getId() != client.getId())
+			throw new DataIntegrityViolationException("NIF " + client.getNif() + " already in system!");
+		
+		obj = personRepository.findByEmail(client.getEmail());
+		if(obj.isPresent() && obj.get().getId() != client.getId())
+			throw new DataIntegrityViolationException("Email " + client.getEmail() + " already in system!");
+		
+		obj = personRepository.findByAddress(client.getAddress());
+		if(obj.isPresent() && obj.get().getId() != client.getId())
+			throw new DataIntegrityViolationException("Address " + client.getAddress() + " already in system!");
+	}
+	
 	private void validateNifEmailAndAddress(ClientDTO clientDTO) {
 		Optional<Person> obj = personRepository.findByNif(clientDTO.getNif());
 		if(obj.isPresent() && obj.get().getId() != clientDTO.getId())
