@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 
+/*
+ * Response Body for Menu Objects following REST good practices with request details 
+ */
 public class ResponseMenu {
 
 	private String status;

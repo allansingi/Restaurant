@@ -11,6 +11,9 @@ import javax.persistence.OneToMany;
 import com.allanborges.restaurantAPI.domain.dtos.CourierDTO;
 import com.allanborges.restaurantAPI.domain.enums.PersonProfile;
 
+/*
+ * Courier Entity class with all business logic requested fields
+ */
 @Entity
 public class Courier extends Person implements Serializable {
 	private static final long serialVersionUID = 1L;

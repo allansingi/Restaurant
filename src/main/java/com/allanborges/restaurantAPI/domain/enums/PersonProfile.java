@@ -1,5 +1,8 @@
 package com.allanborges.restaurantAPI.domain.enums;
 
+/*
+ * Person Profiles ENUM for Authorization logic attribution
+ */
 public enum PersonProfile {
 	
 	ADMIN(0, "ROLE_ADMIN"), CLIENT(1, "ROLE_CLIENT"), COURIER(2, "ROLE_COURIER");

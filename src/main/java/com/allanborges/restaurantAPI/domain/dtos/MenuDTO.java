@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import com.allanborges.restaurantAPI.domain.Menu;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/*
+ * DTO layer for Menu Entity
+ */
 public class MenuDTO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

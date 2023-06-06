@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.allanborges.restaurantAPI.domain.Courier;
 import com.allanborges.restaurantAPI.domain.dtos.CourierDTO;
 
+/*
+ * Methods for controller layer end-points usage
+ */
 @Service
 public interface CourierService {
 	

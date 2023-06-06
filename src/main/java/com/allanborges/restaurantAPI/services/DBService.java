@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.allanborges.restaurantAPI.domain.Client;
@@ -22,31 +23,31 @@ public class DBService {
 	
 	@Autowired
 	private PersonRepository personRepository;
-	
 	@Autowired
 	private CourierRepository courierRepository;
-	
 	@Autowired
 	private MenuRepository menuRepository;
-	
 	@Autowired
 	private RequestRepository requestRepository;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	
 	public void instantiateDB() {
 		
-		Client cli1 = new Client(null, "Allan Borges", "123456789", "Null Street, 10" ,"allanborges@mail.com", "123");
+		Client cli1 = new Client(null, "Allan Borges", "123456789", "Null Street, 10" ,"allanborges@mail.com", encoder.encode("123"));
 		cli1.addProfile(PersonProfile.ADMIN);
-		Client cli2 = new Client(null, "Scorpion", "111111111", "Scorpion Street, 1" ,"scorpion@mail.com", "123");
-		Client cli3 = new Client(null, "Sub-Zero", "000000000", "Sub-Zero Street, -0" ,"sub-zero@mail.com", "123");
-		Client cli4 = new Client(null, "Shang-Tsung", "999999999", "Shang-Tsung Street, 99" ,"shang-tsung@mail.com", "123");
-		Client cli5 = new Client(null, "raiden", "222222222", "Raiden Street, 22" ,"raiden@mail.com", "123");
+		Client cli2 = new Client(null, "Scorpion", "111111111", "Scorpion Street, 1" ,"scorpion@mail.com", encoder.encode("123"));
+		Client cli3 = new Client(null, "Sub-Zero", "000000000", "Sub-Zero Street, -0" ,"sub-zero@mail.com", encoder.encode("123"));
+		Client cli4 = new Client(null, "Shang-Tsung", "999999999", "Shang-Tsung Street, 99" ,"shang-tsung@mail.com", encoder.encode("123"));
+		Client cli5 = new Client(null, "raiden", "222222222", "Raiden Street, 22" ,"raiden@mail.com", encoder.encode("123"));
 		
-		Courier cou1 = new Courier(null, "NOT_ASSIGNED", "555555555", "DATA_BASE_CLIENT", "restaurantapi@mail.com", "123");
-		Courier cou2 = new Courier(null, "Mario Bros", "987654321", "Mario Street, 10", "mario@mail.com", "123");
-		Courier cou3 = new Courier(null, "Luigi Bros", "987321654", "Luigi Street, 20", "luigi@mail.com", "123");
+		Courier cou1 = new Courier(null, "NOT_ASSIGNED", "555555555", "DATA_BASE_CLIENT", "restaurantapi@mail.com", encoder.encode("123"));
+		Courier cou2 = new Courier(null, "Mario Bros", "987654321", "Mario Street, 10", "mario@mail.com", encoder.encode("123"));
+		Courier cou3 = new Courier(null, "Luigi Bros", "987321654", "Luigi Street, 20", "luigi@mail.com", encoder.encode("123"));
 		Courier cou4 = new Courier(null, "Toad", "111222333", "Toad Street, 30", "toad@mail.com", "123");
-		Courier cou5 = new Courier(null, "Princess", "321123321", "Princess Street, 30", "princess@mail.com", "123");
-		Courier cou6 = new Courier(null, "Wario", "999888777", "Wario Street, 40", "wario@mail.com", "123");
+		Courier cou5 = new Courier(null, "Princess", "321123321", "Princess Street, 30", "princess@mail.com", encoder.encode("123"));
+		Courier cou6 = new Courier(null, "Wario", "999888777", "Wario Street, 40", "wario@mail.com", encoder.encode("123"));
 		
 		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDateTime.of(2023, 5, 9, 12, 00), null);
 		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, false, LocalDateTime.of(2023, 5, 27, 12, 00), null);

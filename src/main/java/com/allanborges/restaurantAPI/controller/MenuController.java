@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,16 +21,22 @@ import com.allanborges.restaurantAPI.domain.response.ResponseMenu;
 import com.allanborges.restaurantAPI.services.interfaces.MenuService;
 import com.allanborges.restaurantAPI.util.DateGenerator;
 
+/*
+ *  Rest Controller Class for Menu Module end-points  
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class MenuController {
 	
 	@Autowired
 	private MenuService menuService;
-	
 	@Autowired
 	DateGenerator dateGenerator;
 	
+	/*
+	 * Returns a list of created menus in data base
+	 * @return menuDTO list of menus
+	 */
 	@GetMapping(value = "/menuList")
 	public ResponseEntity<ResponseMenu> menuList() {
 		ResponseMenu responseMenu = new ResponseMenu();
@@ -52,6 +59,10 @@ public class MenuController {
         return ResponseEntity.ok().body(responseMenu);
 	}
 
+	/*
+	 * Returns a list of created menus in data base by currentDate >= expirationDate and active flag = true
+	 * @return menuDTO list of menus
+	 */
 	@GetMapping(value = "/activeMenuList")
 	public ResponseEntity<ResponseMenu> activeMenuList() {
 		ResponseMenu responseMenu = new ResponseMenu();
@@ -74,6 +85,12 @@ public class MenuController {
         return ResponseEntity.ok().body(responseMenu);
 	}
 	
+	/*
+	 * Returns a menuDTO by its id
+	 * Integer id in a json object. Example:
+	 * @param json {"id": 1}
+	 * @return a list with the requested menuDTO by its id
+	 */
 	@PostMapping(value = "/menuById")
 	public ResponseEntity<ResponseMenu> menuById(@RequestBody Menu menu) {
 		ResponseMenu responseMenu = new ResponseMenu();
@@ -98,6 +115,12 @@ public class MenuController {
         return ResponseEntity.ok().body(responseMenu);
 	}
 	
+	/*
+	 * Create menu object with data base writing
+	 * MenuDTO with all mandatory fields in a json object. Example:
+	 * @param json {"name": "food", "description": "sea", "price": "99.99", "quantity": "9", "active": "true", "expireDate": "2099-12-31 12:00:00"}
+	 * @return a list with the created menuDTO object
+	 */
 	@PostMapping(value = "/addMenu")
 	public ResponseEntity<ResponseMenu> addMenu(@RequestBody MenuDTO menuDTO) {
 		ResponseMenu responseMenu = new ResponseMenu();
@@ -123,6 +146,12 @@ public class MenuController {
         return ResponseEntity.ok().body(responseMenu);
 	}
 	
+	/*
+	 * Menu object update with data base updating
+	 * MenuDTO with, at least, id field in order to update requested field in a json object. Example:
+	 * @param json {"id": 1, "name": "food2"}
+	 * @return a list with the updated menuDTO object
+	 */
 	@PostMapping(value = "/updateMenu")
 	public ResponseEntity<ResponseMenu> updateMenu(@RequestBody MenuDTO menuDTO) {
 		ResponseMenu responseMenu = new ResponseMenu();
@@ -148,6 +177,12 @@ public class MenuController {
         return ResponseEntity.ok().body(responseMenu);
 	}
 	
+	/*
+	 * Delete a menu by its id. Only persons with ADMIN role
+	 * Integer id in a json object. Example:
+	 * @param json {"id": 1}
+	 */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = "/deleteMenuById")
 	public ResponseEntity<ResponseMenu> deleteMenu(@RequestBody MenuDTO menuDTO) {
 		ResponseMenu responseMenu = new ResponseMenu();

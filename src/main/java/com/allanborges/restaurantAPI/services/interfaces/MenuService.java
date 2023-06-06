@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.allanborges.restaurantAPI.domain.Menu;
 import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 
+/*
+ * Methods for controller layer end-points usage
+ */
 @Service
 public interface MenuService {
 	

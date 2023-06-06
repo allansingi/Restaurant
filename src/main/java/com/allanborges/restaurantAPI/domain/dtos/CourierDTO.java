@@ -10,6 +10,9 @@ import com.allanborges.restaurantAPI.domain.Courier;
 import com.allanborges.restaurantAPI.domain.enums.PersonProfile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/*
+ * DTO layer for Courier Entity
+ */
 public class CourierDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

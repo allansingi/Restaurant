@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import com.allanborges.restaurantAPI.domain.dtos.MenuDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/*
+ * Menu Entity class with all business logic requested fields
+ */
 @Entity
 public class Menu implements Serializable {
 	private static final long serialVersionUID = 1L;

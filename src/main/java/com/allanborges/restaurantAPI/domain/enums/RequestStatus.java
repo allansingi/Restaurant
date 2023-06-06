@@ -1,5 +1,8 @@
 package com.allanborges.restaurantAPI.domain.enums;
 
+/*
+ * Request Status ENUM for Request logic attribution
+ */
 public enum RequestStatus {
 	
 	ORDER_RECEIVED(0, "ORDER_RECEIVED"), PREPARING(1, "PREPARING"), READY(2, "READY"), IN_TRANSIT(3,"IN_TRANSIT"), DELIVERED(4, "DELIVERED"), CANCELLED(5, "CANCELLED");

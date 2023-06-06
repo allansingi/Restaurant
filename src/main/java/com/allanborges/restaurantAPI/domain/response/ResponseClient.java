@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.allanborges.restaurantAPI.domain.dtos.ClientDTO;
 
+/*
+ * Response Body for Client Objects following REST good practices with request details 
+ */
 public class ResponseClient {
 	
 	private String status;

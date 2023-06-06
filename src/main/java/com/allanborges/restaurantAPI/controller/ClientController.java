@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,16 +21,22 @@ import com.allanborges.restaurantAPI.domain.response.ResponseClient;
 import com.allanborges.restaurantAPI.services.interfaces.ClientService;
 import com.allanborges.restaurantAPI.util.DateGenerator;
 
+/*
+ *  Rest Controller Class for Client Module end-points  
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
-	
 	@Autowired
 	DateGenerator dateGenerator;
 
+	/*
+	 * Returns a list of created clients in data base
+	 * @return clientDTO list of clients
+	 */
 	@GetMapping(value = "/clientList")
 	public ResponseEntity<ResponseClient> clientList() {
 		ResponseClient responseClient = new ResponseClient();
@@ -52,6 +59,12 @@ public class ClientController {
         return ResponseEntity.ok().body(responseClient);
 	}
 	
+	/*
+	 * Returns a client by its id
+	 * Integer id in a json object. Example:
+	 * @param json {"id": 1}
+	 * @return a list with the requested clientDTO by its id
+	 */
 	@PostMapping(value = "/clientById")
 	public ResponseEntity<ResponseClient> clientById(@RequestBody Client client) {
 		ResponseClient responseClient = new ResponseClient();
@@ -76,6 +89,12 @@ public class ClientController {
         return ResponseEntity.ok().body(responseClient);
 	}
 	
+	/*
+	 * Create client object with data base writing
+	 * ClientDTO with all mandatory fields in a json object. Example:
+	 * @param json {"name": "foo", "nif": "123456789", "address": "foo st. 1", "email": "foo@mail.com", "password": "123"}
+	 * @return a list with the created clientDTO object
+	 */
 	@PostMapping(value = "/addClient")
 	public ResponseEntity<ResponseClient> addClient(@RequestBody ClientDTO clientDTO) {
 		ResponseClient responseClient = new ResponseClient();
@@ -100,6 +119,12 @@ public class ClientController {
         return ResponseEntity.ok().body(responseClient);
 	}
 	
+	/*
+	 * Client object update with data base updating
+	 * ClientDTO with, at least, id field in order to update requested field in a json object. Example:
+	 * @param json {"id": 1, "name": "foo2"}
+	 * @return a list with the updated clientDTO object
+	 */
 	@PostMapping(value = "/updateClient")
 	public ResponseEntity<ResponseClient> updateClient(@RequestBody ClientDTO clientDTO) {
 		ResponseClient responseClient = new ResponseClient();
@@ -124,6 +149,12 @@ public class ClientController {
         return ResponseEntity.ok().body(responseClient);
 	}
 	
+	/*
+	 * Delete a clientDTO by its id. Only persons with ADMIN role
+	 * Integer id in a json object. Example:
+	 * @param json {"id": 1}
+	 */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = "/deleteClientById")
 	public ResponseEntity<ResponseClient> deleteClient(@RequestBody ClientDTO clientDTO) {
 		ResponseClient responseClient = new ResponseClient();

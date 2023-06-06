@@ -26,6 +26,9 @@ import com.allanborges.restaurantAPI.services.interfaces.MenuService;
 import com.allanborges.restaurantAPI.services.interfaces.RequestService;
 import com.allanborges.restaurantAPI.util.DateGenerator;
 
+/*
+ * Methods Implementation for controller layer end-points usage
+ */
 @Service
 public class RequestServiceImpl implements RequestService {
 	

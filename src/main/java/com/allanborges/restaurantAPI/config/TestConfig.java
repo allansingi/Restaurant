@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.allanborges.restaurantAPI.services.DBService;
 
+/*
+ * Starts H2 database initial data as follows in services.DBService.class 
+ */
+
 @Configuration
 public class TestConfig {
 	

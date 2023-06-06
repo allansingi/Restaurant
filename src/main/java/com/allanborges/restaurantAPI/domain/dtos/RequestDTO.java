@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import com.allanborges.restaurantAPI.domain.Request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/*
+ * DTO layer for Request Entity
+ */
 public class RequestDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

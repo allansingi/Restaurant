@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.allanborges.restaurantAPI.domain.Courier;
@@ -16,6 +17,9 @@ import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidE
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
 import com.allanborges.restaurantAPI.services.interfaces.CourierService;
 
+/*
+ * Methods Implementation for controller layer end-points usage
+ */
 @Service
 public class CourierServiceImpl implements CourierService {
 	
@@ -23,7 +27,8 @@ public class CourierServiceImpl implements CourierService {
 	private CourierRepository courierRepository;
 	@Autowired
 	private PersonRepository personRepository;
-
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	@Override
 	public List<Courier> getAllCourier() {
@@ -39,6 +44,7 @@ public class CourierServiceImpl implements CourierService {
 	@Override
 	public Courier addCourier(CourierDTO courierDTO) {
 		courierDTO.setId(null);
+		courierDTO.setPassword(encoder.encode(courierDTO.getPassword()));
 		if(courierDTO.getName() == null || courierDTO.getNif() == null || courierDTO.getAddress() == null || courierDTO.getEmail() == null || courierDTO.getPassword() == null)
 			throw new MethodArgumentNotValidException("Fields NAME, NIF, ADDRESS, EMAIL and PASSWORD are mandatory");
 		else {

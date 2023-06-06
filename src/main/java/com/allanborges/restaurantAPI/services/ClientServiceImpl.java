@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.allanborges.restaurantAPI.domain.Client;
@@ -16,6 +17,9 @@ import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidE
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
 import com.allanborges.restaurantAPI.services.interfaces.ClientService;
 
+/*
+ * Methods Implementation for controller layer end-points usage
+ */
 @Service
 public class ClientServiceImpl implements ClientService {
 	
@@ -23,6 +27,8 @@ public class ClientServiceImpl implements ClientService {
 	private ClientRepository clientRepository;
 	@Autowired
 	private PersonRepository personRepository;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	
 	@Override
@@ -39,6 +45,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public Client addClient(ClientDTO clientDTO) {
 		clientDTO.setId(null);
+		clientDTO.setPassword(encoder.encode(clientDTO.getPassword()));
 		if(clientDTO.getName() == null || clientDTO.getNif() == null || clientDTO.getAddress() == null || clientDTO.getEmail() == null || clientDTO.getPassword() == null)
 			throw new MethodArgumentNotValidException("Fields NAME, NIF, ADDRESS, EMAIL and PASSWORD are mandatory");
 		else {

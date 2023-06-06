@@ -16,6 +16,9 @@ import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidE
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
 import com.allanborges.restaurantAPI.services.interfaces.MenuService;
 
+/*
+ * Methods Implementation for controller layer end-points usage
+ */
 @Service
 public class MenuServiceImpl implements MenuService {
 	

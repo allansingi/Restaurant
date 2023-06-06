@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.allanborges.restaurantAPI.domain.Request;
 import com.allanborges.restaurantAPI.domain.dtos.RequestDTO;
 
+/*
+ * Methods for controller layer end-points usage
+ */
 @Service
 public interface RequestService {
 

@@ -19,6 +19,9 @@ import javax.persistence.Id;
 import com.allanborges.restaurantAPI.domain.enums.PersonProfile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/*
+ * Person abstract Entity class with common fields for Client and Courier objects instantiation
+ */
 @Entity
 public abstract class Person implements Serializable {
 	private static final long serialVersionUID = 1L;

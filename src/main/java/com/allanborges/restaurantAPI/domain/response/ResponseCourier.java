@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.allanborges.restaurantAPI.domain.dtos.CourierDTO;
 
+/*
+ * Response Body for Courier Objects following REST good practices with request details 
+ */
 public class ResponseCourier {
 	
 	private String status;

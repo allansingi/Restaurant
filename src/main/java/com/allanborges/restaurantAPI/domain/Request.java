@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import com.allanborges.restaurantAPI.domain.enums.RequestStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/*
+ * Request Entity class with all business logic requested fields
+ */
 @Entity
 public class Request implements Serializable {
 	private static final long serialVersionUID = 1L;
