@@ -4,7 +4,7 @@ Java Back-End REST API for creating requests for menu delivery and assign the re
 change delivery status for delivery monitoring, respecting authorization to perform actions (CRUD for the 3 modules).
 
 AUTHENTICATION:
-In order to get the CLIENT or ADMIN JWT, pass a JSON object in the body of the request as follows:
+In order to get the CLIENT or ADMIN JWT, pass a JSON object in the body of a POST request as follows:
 
 {
     "email": "gusteau@mail.com",
