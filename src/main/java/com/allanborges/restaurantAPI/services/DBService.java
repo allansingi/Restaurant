@@ -45,7 +45,7 @@ public class DBService {
 		Courier cou1 = new Courier(null, "NOT_ASSIGNED", "555555555", "DATA_BASE_CLIENT", "restaurantapi@mail.com", encoder.encode("123"));
 		Courier cou2 = new Courier(null, "Mario Bros", "987654321", "Mario Street, 10", "mario@mail.com", encoder.encode("123"));
 		Courier cou3 = new Courier(null, "Luigi Bros", "987321654", "Luigi Street, 20", "luigi@mail.com", encoder.encode("123"));
-		Courier cou4 = new Courier(null, "Toad", "111222333", "Toad Street, 30", "toad@mail.com", "123");
+		Courier cou4 = new Courier(null, "Toad", "111222333", "Toad Street, 30", "toad@mail.com", encoder.encode("123"));
 		Courier cou5 = new Courier(null, "Princess", "321123321", "Princess Street, 30", "princess@mail.com", encoder.encode("123"));
 		Courier cou6 = new Courier(null, "Wario", "999888777", "Wario Street, 40", "wario@mail.com", encoder.encode("123"));
 		
