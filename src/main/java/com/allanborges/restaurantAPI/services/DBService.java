@@ -18,6 +18,9 @@ import com.allanborges.restaurantAPI.repositories.MenuRepository;
 import com.allanborges.restaurantAPI.repositories.PersonRepository;
 import com.allanborges.restaurantAPI.repositories.RequestRepository;
 
+/*
+ * Data base initial data for testing purpose
+ */
 @Service
 public class DBService {
 	
