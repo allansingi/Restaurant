@@ -16,6 +16,7 @@ import com.allanborges.restaurantAPI.services.exceptions.DataIntegrityViolationE
 import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidException;
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
 import com.allanborges.restaurantAPI.services.interfaces.CourierService;
+import com.allanborges.restaurantAPI.util.DateGenerator;
 
 /*
  * Methods Implementation for controller layer end-points usage
@@ -29,6 +30,8 @@ public class CourierServiceImpl implements CourierService {
 	private PersonRepository personRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private DateGenerator dateGenerator;
 	
 	@Override
 	public List<Courier> getAllCourier() {
@@ -49,6 +52,7 @@ public class CourierServiceImpl implements CourierService {
 			throw new MethodArgumentNotValidException("Fields NAME, NIF, ADDRESS, EMAIL and PASSWORD are mandatory");
 		else {
 			validateNifEmailAndAddress(courierDTO);
+			courierDTO.setCreateDate(dateGenerator.generateCurrentDateTime());
 			Courier courier = new Courier(courierDTO);
 			return courierRepository.save(courier);
 		}
@@ -86,8 +90,10 @@ public class CourierServiceImpl implements CourierService {
 		//password Field
 		if(courierDTO.getPassword() == null)
 			courierDTO.setPassword(currentCourier.getPassword());
-		else
+		else if(courierDTO.getPassword().equals(currentCourier.getAddress()))
 			currentCourier.setPassword(courierDTO.getPassword());
+		else
+			courierDTO.setPassword(encoder.encode(courierDTO.getPassword()));
 		
 		validateNifEmailAndAddress(currentCourier);
 		currentCourier = new Courier(courierDTO);

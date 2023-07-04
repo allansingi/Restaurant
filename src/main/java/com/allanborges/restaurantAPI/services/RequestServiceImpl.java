@@ -159,25 +159,45 @@ public class RequestServiceImpl implements RequestService {
 				Menu currentRequestedMenu = menuService.getMenuById(currentRequest.getRequestedMenuId());
 				List<Menu> activeMenuList = menuService.getActiveMenu();
 				Menu newRequestedMenu = menuService.getMenuById(requestDTO.getRequestedMenuId());
-				if(!activeMenuList.contains(newRequestedMenu))
-					throw new RequestedMenuNotAvailableException("The requested menu is not available in the activeList");
-				else if(requestDTO.getRequestedQuantity() == 0)
-					throw new InsufficientMenuQuantityException("Cannot place a request with quantity 0");
-				else if(requestDTO.getRequestedQuantity() > newRequestedMenu.getQuantity())
-					throw new InsufficientMenuQuantityException("Insufficient menu availability, there are " + newRequestedMenu.getQuantity() + " available");
-				else {
-					//Returning current menuQuantity
-					currentRequestedMenu.setQuantity(currentRequestedMenu.getQuantity() + currentRequest.getRequestedQuantity());
-					menuRepository.save(currentRequestedMenu);
-					//NewRequestedMenu - MenuQuantity Table Field Update
-					newRequestedMenu.setQuantity(newRequestedMenu.getQuantity() - requestDTO.getRequestedQuantity());
-					menuRepository.save(newRequestedMenu);
-					
-					request.setRequestedMenuId(newRequestedMenu.getId());
-					request.setRequestedMenuName(newRequestedMenu.getName());
-					request.setRequestedQuantity(requestDTO.getRequestedQuantity());
-					request.setRequestStatus(currentRequest.getRequestStatus());
-					request.setUpdateDate(dateGenerator.generateCurrentDateTime());
+				
+				if(currentRequestedMenu.getId() != newRequestedMenu.getId()) {
+				
+					if(!activeMenuList.contains(newRequestedMenu))
+						throw new RequestedMenuNotAvailableException("The requested menu is not available in the activeList");
+					else if(requestDTO.getRequestedQuantity() == 0)
+						throw new InsufficientMenuQuantityException("Cannot place a request with quantity 0");
+					else if(requestDTO.getRequestedQuantity() > newRequestedMenu.getQuantity())
+						throw new InsufficientMenuQuantityException("Insufficient menu availability, there are " + newRequestedMenu.getQuantity() + " available");
+					else {
+						//Returning current menuQuantity
+						currentRequestedMenu.setQuantity(currentRequestedMenu.getQuantity() + currentRequest.getRequestedQuantity());
+						menuRepository.save(currentRequestedMenu);
+						//NewRequestedMenu - MenuQuantity Table Field Update
+						newRequestedMenu.setQuantity(newRequestedMenu.getQuantity() - requestDTO.getRequestedQuantity());
+						menuRepository.save(newRequestedMenu);
+						
+						request.setRequestedMenuId(newRequestedMenu.getId());
+						request.setRequestedMenuName(newRequestedMenu.getName());
+						request.setRequestedQuantity(requestDTO.getRequestedQuantity());
+						request.setRequestStatus(currentRequest.getRequestStatus());
+						request.setUpdateDate(dateGenerator.generateCurrentDateTime());
+					}
+				} else {
+					if(requestDTO.getRequestedQuantity() == 0)
+						throw new InsufficientMenuQuantityException("Cannot place a request with quantity 0");
+					else if((currentRequestedMenu.getQuantity() + currentRequest.getRequestedQuantity()) < requestDTO.getRequestedQuantity())
+						throw new InsufficientMenuQuantityException("Insufficient menu availability, there are " + currentRequestedMenu.getQuantity() + " available");
+					else {
+						//MenuQuantity Table Field Update
+						currentRequestedMenu.setQuantity((currentRequestedMenu.getQuantity() + currentRequest.getRequestedQuantity()) - requestDTO.getRequestedQuantity());
+						menuRepository.save(currentRequestedMenu);
+						
+						request.setRequestedMenuId(currentRequestedMenu.getId());
+						request.setRequestedMenuName(currentRequestedMenu.getName());
+						request.setRequestedQuantity(requestDTO.getRequestedQuantity());
+						request.setRequestStatus(currentRequest.getRequestStatus());
+						request.setUpdateDate(dateGenerator.generateCurrentDateTime());
+					}
 				}
 			}
 		}
@@ -208,7 +228,7 @@ public class RequestServiceImpl implements RequestService {
 		}
 		
 		//CourierID Field
-		if(requestDTO.getCourierId() == null)
+		if(requestDTO.getCourierId() == null || currentRequest.getCourier().getId() == requestDTO.getCourierId())
 			request.setCourier(currentRequest.getCourier());
 		else if(currentRequest.getRequestStatus() != RequestStatus.READY)
 			throw new RequestStatusNotUpdatableException("The Courier only can be assigned to requests with READY status");
@@ -222,9 +242,7 @@ public class RequestServiceImpl implements RequestService {
 	
 	
 	private boolean canUpdateDueToRequestedStatus(Integer currentRequestStatusCode) {
-		if(currentRequestStatusCode == 3)
-			throw new RequestedMenuInTransitException("The Request status is IN_TRANSIT and cannot be altered");
-		else if(currentRequestStatusCode == 4)
+		if(currentRequestStatusCode == 4)
 			throw new RequestedMenuInTransitException("The Requestet was already DELIVERED and cannot be altered");
 		else if(currentRequestStatusCode == 5)
 			throw new RequestedMenuInTransitException("The Requested was CANCELLED and cannot be altered");

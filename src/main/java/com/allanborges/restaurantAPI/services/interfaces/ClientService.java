@@ -15,6 +15,7 @@ public interface ClientService {
 
 	List<Client> getAllClient();
 	Client getClientById(Integer id);
+	Client getClientByEmail(String email);
 	Client addClient(ClientDTO clientDTO);
 	Client updateClient(ClientDTO clientDTO);
 	void deleteClient(Integer id);

@@ -90,6 +90,36 @@ public class ClientController {
 	}
 	
 	/*
+	 * Returns a client by its email
+	 * Integer id in a json object. Example:
+	 * @param json {"email": json@mail.com}
+	 * @return a list with the requested clientDTO by its id
+	 */
+	@PostMapping(value = "/clientByEmail")
+	public ResponseEntity<ResponseClient> clientByEmail(@RequestBody Client client) {
+		ResponseClient responseClient = new ResponseClient();
+		responseClient.setSentOn(dateGenerator.generateCurrentDate());
+		responseClient.setTransactionId(UUID.randomUUID().toString());
+		try {
+            Client currentClient = clientService.getClientByEmail(client.getEmail());
+            List<Client> currentClientList = new ArrayList<>();
+            currentClientList.add(currentClient);
+            List<ClientDTO> listDTO = currentClientList.stream().map(x -> new ClientDTO(x)).collect(Collectors.toList());
+            
+            responseClient.setStatus("OK");
+            responseClient.setStatusCode("200");
+            responseClient.setMsg("Method getClientByEmail Success");
+            responseClient.setResValues(listDTO);
+        } catch (Exception e) {
+        	responseClient.setStatus("NOK");
+        	responseClient.setStatusCode("500");
+        	responseClient.setMsg("Method getClientByEmail Error: " + e.getMessage());
+        	responseClient.setResValues(new ArrayList<>());
+        }
+        return ResponseEntity.ok().body(responseClient);
+	}
+	
+	/*
 	 * Create client object with data base writing
 	 * ClientDTO with all mandatory fields in a json object. Example:
 	 * @param json {"name": "foo", "nif": "123456789", "address": "foo st. 1", "email": "foo@mail.com", "password": "123"}

@@ -52,11 +52,11 @@ public class DBService {
 		Courier cou5 = new Courier(null, "Princess", "321123321", "Princess Street, 30", "princess@mail.com", encoder.encode("123"));
 		Courier cou6 = new Courier(null, "Wario", "999888777", "Wario Street, 40", "wario@mail.com", encoder.encode("123"));
 		
-		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDateTime.of(2023, 5, 9, 12, 00), null);
-		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, false, LocalDateTime.of(2023, 5, 27, 12, 00), null);
-		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 6, 15, 12, 00), null);
-		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 6, 15, 12, 00), null);
-		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 6, 15, 12, 00), null);
+		Menu menu1 = new Menu(null, "Bitoque de carne", "Delicious portuguese dish of meat with fries", 4.9, 5, true, LocalDateTime.of(2023, 5, 9, 12, 00), "https://www.bitoques.pt/assets/images/image03.jpg?v=7074c5aa");
+		Menu menu2 = new Menu(null, "Polvo à Lagareiro", "Octupus with tipical portuguese sauce and cooking", 14.9, 10, false, LocalDateTime.of(2023, 5, 27, 12, 00), "https://www.petiscos.com/wp-content/uploads/2020/10/Polvo_Lagareiro_Receita-1-678x470.jpg");
+		Menu menu3 = new Menu(null, "Bacalhau à Lagareiro", "Cod Fish with tipical portuguese sauce and cooking", 12.9, 10, true, LocalDateTime.of(2023, 12, 31, 12, 00), "https://receitadebacalhau.com.br/wp-content/uploads/2022/02/Receita-Tradicional-de-Bacalhau-a-Lagareiro.jpg");
+		Menu menu4 = new Menu(null, "Carabineiro", "Swrimp family sea food but more delicious", 199.9, 2, true, LocalDateTime.of(2023, 12, 31, 12, 00), "https://www.receitasemenus.net/wp-content/uploads/2020/07/carabineiros-arroz-tinta-choco.jpg");
+		Menu menu5 = new Menu(null, "Camarão Tigre", "Swrimp family sea food but bigger", 149.9, 2, true, LocalDateTime.of(2023, 12, 31, 12, 00), "https://ruralea.com/wp-content/uploads/2021/12/3omy67478ve61-1-1024x684.jpg");
 		
 		Request req1 = new Request(null, cli1, cou1, 3, 1, RequestStatus.ORDER_RECEIVED);
 		Request req2 = new Request(null, cli1, cou1, 4, 1, RequestStatus.ORDER_RECEIVED);

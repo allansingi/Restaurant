@@ -16,6 +16,7 @@ import com.allanborges.restaurantAPI.services.exceptions.DataIntegrityViolationE
 import com.allanborges.restaurantAPI.services.exceptions.MethodArgumentNotValidException;
 import com.allanborges.restaurantAPI.services.exceptions.ObjectNotFoundException;
 import com.allanborges.restaurantAPI.services.interfaces.ClientService;
+import com.allanborges.restaurantAPI.util.DateGenerator;
 
 /*
  * Methods Implementation for controller layer end-points usage
@@ -29,6 +30,8 @@ public class ClientServiceImpl implements ClientService {
 	private PersonRepository personRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private DateGenerator dateGenerator;
 
 	
 	@Override
@@ -41,6 +44,12 @@ public class ClientServiceImpl implements ClientService {
 		Optional<Client> client = clientRepository.findById(id);
 		return client.orElseThrow(() -> new ObjectNotFoundException("Client with id " + id + " not found"));
 	}
+	
+	@Override
+	public Client getClientByEmail(String email) {
+		Optional<Client> client = clientRepository.findByEmail(email);
+		return client.orElseThrow(() -> new ObjectNotFoundException("Client with email " + email + " not found"));
+	}
 
 	@Override
 	public Client addClient(ClientDTO clientDTO) {
@@ -50,6 +59,7 @@ public class ClientServiceImpl implements ClientService {
 			throw new MethodArgumentNotValidException("Fields NAME, NIF, ADDRESS, EMAIL and PASSWORD are mandatory");
 		else {
 			validateNifEmailAndAddress(clientDTO);
+			clientDTO.setCreateDate(dateGenerator.generateCurrentDateTime());
 			Client client = new Client(clientDTO);
 			return clientRepository.save(client);
 		}
@@ -87,8 +97,10 @@ public class ClientServiceImpl implements ClientService {
 		//password Field
 		if(clientDTO.getPassword() == null)
 			clientDTO.setPassword(currentClient.getPassword());
-		else
+		else if(clientDTO.getPassword().equals(currentClient.getPassword()))
 			currentClient.setPassword(clientDTO.getPassword());
+		else
+			clientDTO.setPassword(encoder.encode(clientDTO.getPassword()));
 		
 		validateNifEmailAndAddress(currentClient);
 		currentClient = new Client(clientDTO);
